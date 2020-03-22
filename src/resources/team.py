@@ -1,6 +1,7 @@
 from dataclasses import *
 from typing import *
 
+
 @dataclass
 class Team:
     team_id: int
@@ -23,6 +24,8 @@ The Base component that fundamentally makes up who a player is belongs here.
 The is the direct result of the Player Search API from:
 https://www.api-football.com/documentation#players-search-response-model
 """
+
+
 @dataclass
 class PlayerBaseComponent:
     player_id: int
@@ -49,31 +52,13 @@ Simplify it to just an array of player ids
 """
 
 
-
 """
 Statistics API:
 
 PARAMS:
 player_id, team_id, season
-
-{
-    "api": {
-        "results": 3,
         "players": [
             {
-                "player_id": 276,
-                "player_name": "Neymar da Silva Santos Junior",
-                "firstname": "Neymar",
-                "lastname": "da Silva Santos Junior",
-                "number": 10,
-                "position": "Attacker",
-                "age": 27,
-                "birth_date": "05/02/1992",
-                "birth_place": "Mogi das Cruzes",
-                "birth_country": "Brazil",
-                "nationality": "Brazil",
-                "height": "175 cm",
-                "weight": "68 kg",
                 "injured": "False",
                 "rating": "8.183333",
                 "team_id": 85,
@@ -136,6 +121,56 @@ player_id, team_id, season
                 }
             },
         ]
-    }
-}
 """
+@dataclass
+class PlayerStats:
+    player_id: int
+    injured: bool
+    rating: float
+    team_id: int
+    team_name: str
+    league: str
+    season: str
+    captain: str
+    # Composite stats
+    shots_total: int
+    shots_on: int
+
+    goals_total: int
+    goals_conceded: int
+    goals_assists: int
+
+    passes_total: int
+    passes_key: int
+    passes_accuracy: float
+
+    tackles_total: int
+    tackles_blocks: int
+    tackles_interceptions: int
+    
+    duels_total: int
+    duels_won: int
+
+    dribbles_attempts: int
+    dribbles_success: int
+    
+    fouls_draw: int
+    fouls_committed: int
+    
+    cards_yellow: int
+    cards_yellowred: int
+    cards_red: int
+    
+    penalty_won: int
+    penalty_commited: int
+    penalty_success: int
+    penalty_missed: int
+    penalty_saved: int
+
+    games_appearances: int
+    games_minutes_played: int
+    games_lineups: int
+
+    substitutes_in: int
+    substitutes_out: int
+    substitutes_bench: int
