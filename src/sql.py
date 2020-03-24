@@ -12,7 +12,7 @@ class Table:
     init_command: str
     # schema: Dict[str, str] = {}
 
-
+"""List of tables nicluding queries since the actual database queries need to be shown"""
 _tables = {
     "Players": Table(
         """CREATE TABLE IF NOT EXISTS Players (
@@ -111,10 +111,6 @@ _tables = {
 
 def init_database():
     cursor = connection.cursor()
-
-    # for table_name, com in _tables.items():
-    #     print(com.init_command)
-    #     cursor.execute(com.init_command)
     [cursor.execute(com.init_command) for table_name, com in _tables.items()]
     connection.commit()
 
