@@ -49,13 +49,13 @@ _tables = {
     ),
     "PlayerStats": Table(
         """CREATE TABLE IF NOT EXISTS PlayerStats(
-            player_id integer,
+            player_id integer NOT NULL,
             injured boolean,
             rating float,
-            team_id integer,
+            team_id integer NOT NULL,
             team_name text,
             league text,
-            season text,
+            season text NOT NULL,
             captain text,
     
             shots_total integer,
@@ -106,6 +106,37 @@ _tables = {
         );
         """
     ),
+    "Coaches": Table(
+        """CREATE TABLE IF NOT EXISTS Coaches (
+            coach_id integer PRIMARY KEY,
+            name text,
+            firstname text,
+            lastname text,
+            age integer,
+            birth_date date,
+            birth_place text,
+            birth_country text,
+            nationality text,
+            weight integer,
+            height integer
+        );
+        """
+    ),
+    "CoachedFor": Table (
+        """CREATE TABLE IF NOT EXISTS CoachedFor (
+            team_id integer NOT NULL,
+            coach_id integer NOT NULL,
+            season text NOT NULL,
+
+            start_date text,
+            end_date text,
+
+            FOREIGN KEY (coach_id) REFERENCES Coaches(coach_id),
+            FOREIGN KEY (team_id) REFERENCES Teams(team_id),
+            PRIMARY KEY (coach_id, team_id, season)
+        );
+        """
+    )
 }
 
 

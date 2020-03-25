@@ -174,3 +174,27 @@ class PlayerStats:
     substitutes_in: int
     substitutes_out: int
     substitutes_bench: int
+
+
+
+@dataclass
+class Coach:
+    coach_id: int
+    name: str
+    firstname: str
+    lastname: str
+    age: int
+    birth_date: str
+    birth_place: str
+    birth_country: str
+    nationality: str
+    weight: Optional[int]
+    height: Optional[int]
+
+@dataclass
+class CoachedFor:
+    team_id: int
+    coach_id: int
+    season: str
+    start_date: str
+    end_date: str
