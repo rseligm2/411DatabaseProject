@@ -1,9 +1,4 @@
 <!doctype html>
-{#{% if name %}#}
-{#  <h1>Hello {{ name }}!</h1>#}
-{#{% else %}#}
-{#  <h1>Hello, World!</h1>#}
-{#{% endif %}#}
 <html>
     <head>
         <title>Your Soccer</title>
@@ -12,6 +7,7 @@
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
               crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+        <script src="https://kit.fontawesome.com/655acbe5e6.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 
     </head>
@@ -20,13 +16,13 @@
             <div class="ui container">
                 <div class="header item"><i class="futbol icon"></i> YourSoccer </div>
                 <a href="/" class="item">Home</a>
-                <a href="/game" class="item">Game</a>
-                <a href="/team" class="item">Team</a>
-                <a href="/player" class="item">Player</a>
+                <a href="#" class="item">Game</a>
+                <a href="#" class="item">Team</a>
+                <a href="#" class="item">Player</a>
                 <a href="/contact" class="item">Contact</a>
                 <div class="right menu">
-                    <a href="/signup" class="item">Sign up</a>
-                    <a href="/login" class="item">Log-in</a>
+                    <a href="/signup" class="item"><i class="user plus icon"></i>Sign up</a>
+                    <a href="/login" class="item"><i class="user icon"></i>Log-in</a>
                 </div>
             </div>
 
@@ -34,10 +30,12 @@
         </div>
 
         <div class="hero-banner">
-            <div class="hero-content">
-                <h1>Your Soccer</h1>
-                <h4>Your online soccer community. You can see the stats of all teams and players and even interact with other users.</h4>
-                <h5>December 12, 2018</h5>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-header">Your Soccer</div>
+                    <h4>Your online soccer community. You can see the stats of all teams and players and even interact with other users.</h4>
+                    <button class="medium ui olive large button">Explore</button>
+                </div>
             </div>
         </div>
 
