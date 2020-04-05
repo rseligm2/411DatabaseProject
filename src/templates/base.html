@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    {% if title %}
+    <title>{{ title }} - Soccer</title>
+    {% else %}
+    <title>Your Soccer</title>
+    {% endif %}
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://kit.fontawesome.com/655acbe5e6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
+</head>
+
+<body>
+    <div class="ui fixed inverted menu">
+        <div class="ui container">
+            <div class="header item"><i class="futbol icon"></i> YourSoccer </div>
+            <a href="{{ url_for('index') }}" class="item">Home</a>
+            <a href="#" class="item">Game</a>
+            <a href="#" class="item">Team</a>
+            <a href="#" class="item">Player</a>
+            <a href="{{ url_for('contact')}}" class="item">Contact</a>
+            <div class="right menu">
+                {% if current_user.is_anonymous %}
+                <a href="{{ url_for('signup')}}" class="item"><i class="user plus icon"></i>Sign up</a>
+                <a href="{{ url_for('login') }}" class="item"><i class="user icon"></i>Log-in</a>
+                {% else %}
+                <a href="{{ url_for('logout') }}" class="item">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+</body>
+
+</html>

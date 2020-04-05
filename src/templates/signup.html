@@ -1,80 +1,49 @@
-<!doctype html>
-<html>
-    <head>
-        <title>Your Soccer</title>
+{% extends "base.html" %}
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-              crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-        <script src="https://kit.fontawesome.com/655acbe5e6.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+{% block content %}
+<div class="login">
+    <i class="fas fa-user-plus fa-5x"></i>
+    <form class="ui form" method="post">
+        <div class="field">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Username">
+        </div>
 
+        <div class="field">
+            <label>Gender</label>
+            <select class="ui fluid search dropdown" name="gender">
+                <option value="" hidden>Gender</option>
+                <option value="1">Female</option>
+                <option value="0">Male</option>
+            </select>
+        </div>
 
-    </head>
-    <body>
-        <div class="ui fixed inverted menu">
-            <div class="ui container">
-                <div class="header item"><i class="futbol icon"></i> YourSoccer </div>
-                <a href="/" class="item">Home</a>
-                <a href="#" class="item">Game</a>
-                <a href="#" class="item">Team</a>
-                <a href="#" class="item">Player</a>
-                <a href="/contact" class="item">Contact</a>
-                <div class="right menu">
-                    <a href="/signup" class="item"><i class="user plus icon"></i>Sign up</a>
-                    <a href="/login" class="item"><i class="user icon"></i>Log-in</a>
-                </div>
+        <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Email">
+        </div>
+        <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Password">
+        </div>
+
+        <div class="date field">
+            <label>Birthday</label>
+            <input type="text" placeholder="MM/DD/YYYY">
+        </div>
+
+        <div class="field">
+            <div class="ui checkbox">
+                <input type="checkbox">
+                <label>I agree to the Terms and Conditions</label>
             </div>
         </div>
-        <div class="login">
-            <i class="fas fa-user-plus fa-5x"></i>
-            <form class="ui form">
-                <div class="field">
-                    <label>Username</label>
-                    <input type="text" name="username" placeholder="Username">
-                </div>
-
-                <div class="field">
-                    <label>Gender</label>
-                    <select class="ui fluid search dropdown" name="gender">
-                        <option value="" hidden>Gender</option>
-                        <option value="1">Female</option>
-                        <option value="0">Male</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label>Email</label>
-                    <input type="email" name="email" placeholder="Email">
-                </div>
-                <div class="field">
-                    <label>Password</label>
-                    <input type="password" name="password" placeholder="Password">
-                </div>
-
-                <div class="date field">
-                    <label>Birthday</label>
-                    <input type="text" placeholder="MM/DD/YYYY">
-                </div>
-
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox">
-                        <label>I agree to the Terms and Conditions</label>
-                    </div>
-                </div>
 
 
 
-                <button class="ui blue button" type="submit">SIGN UP</button>
-            </form>
-        </div>
+        <button class="ui blue button" type="submit">SIGN UP</button>
+    </form>
+</div>
 
 {#        <script type="text/javascript" src="signin.js"></script>#}
-
-    </body>
-</html>
+{% endblock %}

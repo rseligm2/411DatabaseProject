@@ -1,6 +1,6 @@
 import sqlite3 as sql
-from typing import List, Dict, Any, Union, Optional
-from dataclasses import asdict, dataclass, is_dataclass, make_dataclass, astuple
+from dataclasses import asdict, astuple, dataclass, is_dataclass, make_dataclass
+from typing import Any, Dict, List, Optional, Union
 
 from src.config import SQL_DB_FILE
 
@@ -11,6 +11,7 @@ connection = sql.connect(str(SQL_DB_FILE))
 class Table:
     init_command: str
     # schema: Dict[str, str] = {}
+
 
 """List of tables nicluding queries since the actual database queries need to be shown"""
 _tables = {
@@ -122,7 +123,7 @@ _tables = {
         );
         """
     ),
-    "CoachedFor": Table (
+    "CoachedFor": Table(
         """CREATE TABLE IF NOT EXISTS CoachedFor (
             team_id integer NOT NULL,
             coach_id integer NOT NULL,
@@ -136,7 +137,7 @@ _tables = {
             PRIMARY KEY (coach_id, team_id, season)
         );
         """
-    )
+    ),
 }
 
 
