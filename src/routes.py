@@ -2,7 +2,7 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 
 from src.app import app, login_manager
-from src.form import LoginForm
+from src.form import LoginForm, SignupForm
 from src.mongo import users
 from src.resources.user import User, load_user
 
@@ -23,14 +23,15 @@ def login():
         return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
-
+        print(form)
         user = load_user(form.username.data)
+        print(user)
         if user is None or not user.check_password(form.password.data):
             flash("Invalid username or password")
             return redirect(url_for("login"))
-        login_user(user, remember=form.remember_me.data)
+        login_user(user)
         return redirect(url_for("index"))
-    return render_template("login.html")
+    return render_template("login.html", form=form)
 
 
 @app.route("/logout")
@@ -39,9 +40,12 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/signup", endpoint="signup")
+@app.route("/signup", endpoint="signup", methods=["GET", "POST"])
 def signup():
-    return render_template("signup.html")
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    form = SignupForm()
+    return render_template("signup.html", form=form)
 
 
 @app.route("/contact", endpoint="contact")
