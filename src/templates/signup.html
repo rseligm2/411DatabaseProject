@@ -1,50 +1,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-<button class="ui blue button" type="submit">SIGN UP</button>
-
+{#    <div class="ui fluid large teal submit button">SIGN UP</div>#}
 <div class="login">
     <i class="far fa-user fa-5x"></i>
     <form class="ui form" action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <label>{{ form.username.label }}</label>
-        <div class="ui left icon input">
+        <div class="field">
+            <label>{{ form.username.label }}</label>
+            <div class="ui left icon input">
 
-            {{ form.username(size=32) }}
+                {{ form.username(size=32) }}
+                <i class="user icon"></i>
+            </div>
         </div>
 
         {% for error in form.username.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
 
+        <div class="field">
+           <label>{{ form.email.label }}</label>
+            <div class="ui left icon input">
+                <i class="envelope outline icon"></i>
 
+                {{ form.email(size=32) }}
 
-        <label>{{ form.email.label }}</label>
-        <div class="ui left icon input">
-
-            {{ form.email(size=32) }}
-            <i class="user icon"></i>
+            </div>
         </div>
+
 
         {% for error in form.email.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
 
-
-        <label>{{ form.password.label }}</label>
-        <div class="ui left icon input">
-            {{ form.password(size=32) }}
-            <i class="lock icon"></i>
+        <div class="field">
+            <label>{{ form.password.label }}</label>
+            <div class="ui left icon input">
+                {{ form.password(size=32) }}
+                <i class="lock icon"></i>
+            </div>
         </div>
+
 
         {% for error in form.password.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
 
-        <div class="date field">
-            <label>{{form.birthday.label}}</label>
-            {{form.birthday()}}
+        <div class="field">
+            <label>{{ form.birthday.label }}</label>
+            <div class="ui left icon input">
+                {{ form.birthday() }}
+                <i class="calendar icon"></i>
+            </div>
         </div>
+
+
         {% for error in form.birthday.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
@@ -61,7 +72,9 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
 
-        {{ form.submit(class_="ui blue button") }}
+{#        {{ form.submit(class_="ui blue button") }}#}
+        {{ form.submit(class_="ui fluid large teal submit button") }}
+
     </form>
 </div>
 {% endblock %}

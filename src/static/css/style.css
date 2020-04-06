@@ -37,9 +37,10 @@ body, html {
   font-weight: 8;
 }
 
+/* LOGIN and SIGNUP HTML ALL HAVE CLASS: LOGIN*/
 .login {
-  width: 300px;
-  margin: 100px auto;
+  width: 400px;
+  margin: 90px auto;
 
   text-align: left;
 }
@@ -49,24 +50,19 @@ body, html {
   padding-bottom: 10px;
 }
 
-form .button {
-    display:inline-block;
-    width:300px;
-}
 
 .contact {
   width: 500px;
   margin: 100px auto;
   text-align: left;
 }
-/*
-select:required:invalid {
-  color: gray;
+
+.message {
+  text-align: center;
 }
-option[value=""][disabled] {
-  display: none;
+
+#profile {
+  width: 80%;
+  margin: 50px auto;
+  text-align: left;
 }
-option {
-  color: black;
-}
-*/

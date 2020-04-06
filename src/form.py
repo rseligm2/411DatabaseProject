@@ -16,4 +16,4 @@ class SignupForm(FlaskForm):
     birthday = DateField("Birthday", validators=[DataRequired()])
     terms = BooleanField("I agree to the Terms and Conditions", validators=[DataRequired()])
 
-    submit = SubmitField("Login")
+    submit = SubmitField("Sign up")

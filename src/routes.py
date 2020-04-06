@@ -51,3 +51,7 @@ def signup():
 @app.route("/contact", endpoint="contact")
 def contact():
     return render_template("contact.html")
+
+@app.route("/profile", endpoint="profile")
+def contact():
+    return render_template("profile.html")
