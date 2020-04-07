@@ -1,5 +1,6 @@
 from dataclasses import *
 from typing import *
+from datetime import datetime
 
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import (
@@ -13,18 +14,21 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.urls import url_parse
 
 from src.app import app, login_manager
-from src.mongo import users
+from src.mongo import users_col
 
 login_manager.login_view = "login"
 
 
 @dataclass
 class User:
+    _id: str
     username: str
     password_hash: str
-    favorite_player: str
-    team_flair: str
+    birthday: datetime
+    email: str
     comments: List[str]
+    team_flair: Optional[str] = None
+    favorite_player: Optional[str] = None
 
     @staticmethod
     def is_authenticated():
@@ -44,14 +48,18 @@ class User:
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
-    @staticmethod
-    def check_password(password_hash, password):
-        return check_password_hash(password_hash, password)
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+
+    def __repr__(self) -> str:
+        return f"User(<username: {self.username}, password_hash: {self.password_hash}>)"
 
 
 @login_manager.user_loader
 def load_user(username):
-    u = users.find_one({"username": username})
+    u = users_col.find_one({"username": username})
     if not u:
         return None
-    return User(username=u["username"])
+    # print(u)
+    return User(**u)
