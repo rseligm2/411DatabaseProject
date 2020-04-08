@@ -18,23 +18,20 @@ from src.mongo import users_col
 
 login_manager.login_view = "login"
 
-
 @dataclass
 class User:
     _id: str
     username: str
     password_hash: str
-    favorite_player: str
-    team_flair: str
-    #birthday: str
-    #joined_date: str
-    first_name: str
-    last_name: str
-    country: str
-    comments: List[str]
+    email: str
+    birthday: datetime
+    comments: List[str] = field(default_factory=[])
+    joined_date: Optional[datetime] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    country: Optional[str] = None
     team_flair: Optional[str] = None
     favorite_player: Optional[str] = None
-
 
     @staticmethod
     def is_authenticated():
@@ -56,7 +53,6 @@ class User:
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
 
     def __repr__(self) -> str:
         return f"User(<username: {self.username}, password_hash: {self.password_hash}>)"
