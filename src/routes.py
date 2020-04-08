@@ -22,11 +22,6 @@ def index():
     return render_template("index.html")
 
 
-# @app.route("/teams/<teams>")
-# def teams_page(teams):
-#     pass
-
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -119,16 +114,17 @@ ex_user = {
     "team_flair": "Manchester City",
     "birthday": "1995/10/05",
     "joined_date": "2020/4/1",
-    "firstname": "Yuxuan",
-    "lastname": "Zhang",
+    "first_name": "Yuxuan",
+    "last_name": "Zhang",
     "country": "United State",
     "city": "Champaign",
     "state": "Illinois",
     "comments": ["hello, comment 1.", 'hello, comment 2.', 'hello, comment 3.', 'hello, comment 4.']
 }
 
-@app.route("/<username>/home", endpoint="profile")
-def user_home(username):
+
+@app.route("/<username_test>/home")
+def user_home(username_test):
     # TODO: ADD BACKEND FUNCTION TO FIND USER FROM THE DATABASE. NOW I JUST ADD ONE DICTIONARY TO THE WEBSITE
     # TODO: ADD SAVE TO CHANGE THE PROFILE DATA.
     return render_template("profile.html", user=ex_user)

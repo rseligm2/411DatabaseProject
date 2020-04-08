@@ -1,0 +1,28 @@
+{% extends "teams.html" %}
+
+{% block teams %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Founded</th>
+          <th scope="col">venue_name</th>
+          <th scope="col">venue_city</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for t in team_country["api"]["teams"] %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ t["name"] }}</td>
+          <td>{{ t["founded"] }}</td>
+          <td>{{ t["venue_name"] }}</td>
+          <td>{{ t["venue_city"] }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+
+{% endblock %}
