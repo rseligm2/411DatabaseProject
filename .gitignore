@@ -137,3 +137,5 @@ dmypy.json
 
 .vscode/
 .idea/
+
+app_secrets.py
