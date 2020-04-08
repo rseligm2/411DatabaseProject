@@ -10,12 +10,12 @@
                             <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60">
                         </div>
                         <div class="content">
-                            <a class="header">Kristy</a>
+                            <a class="header">{{ user.username }}</a>
                             <div class="meta">
-                              <span class="date">Joined in 2013</span>
+                                <span class="date">{{ user.joined_date }}</span>
                             </div>
                             <div class="description">
-                                  Kristy is an art director living in New York.
+                                Kristy is an art director living in New York.
                             </div>
                         </div>
                         <div class="extra content">
@@ -29,28 +29,111 @@
 
                 <div class="col-9">
                     <ul class="nav nav-tabs" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill"
+                               href="#pills-home" role="tab" aria-controls="pills-profile" aria-selected="true">Home</a>
+                        </li>
 
-                      <li class="nav-item">
-                        <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill"
+                               href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+                        </li>
 
-                      <li class="nav-item">
-                        <a class="nav-link" id="pills-comments-tab" data-toggle="pill" href="#pills-comments" role="tab" aria-controls="pills-comments" aria-selected="true">Comments</a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-activity-tab" data-toggle="pill"
+                               href="#pills-activity" role="tab" aria-controls="pills-activity" aria-selected="false">Activity</a>
+                        </li>
 
-                      <li class="nav-item">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-notification" role="tab" aria-controls="pills-notification" aria-selected="false">Notification</a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-notification-tab" data-toggle="pill"
+                               href="#pills-notification" role="tab" aria-controls="pills-notification" aria-selected="false">Notification</a>
+                        </li>
 
-                      <li class="nav-item">
-                        <a class="nav-link" id="pills-setting-tab" data-toggle="pill" href="#pills-setting" role="tab" aria-controls="pills-setting" aria-selected="false">Setting</a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-setting-tab" data-toggle="pill"
+                               href="#pills-setting" role="tab" aria-controls="pills-setting" aria-selected="false">Setting</a>
+                        </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
-                      <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-                      <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab">...</div>
-                      <div class="tab-pane fade" id="pills-notification" role="tabpanel" aria-labelledby="pills-notification-tab">...</div>
-                      <div class="tab-pane fade" id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">...</div>
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                             aria-labelledby="pills-home-tab">
+                            <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Personal Information</h3>
+                            <div class="border-top my-3"></div>
+
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" value="{{ user.username }}" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="firstname">First Name</label>
+                                        <input type="text" class="form-control" id="firstname" value="{{ user.firstname }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="lastname">Last Name</label>
+                                        <input type="text" class="form-control" id="lastname" value="{{ user.lastname }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Email</label>
+                                        <input type="email" class="form-control" id="inputEmail4" value="{{ user.email }}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Password</label>
+                                        <input type="password" class="form-control" id="inputPassword4" value="{{ user.password }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="birthday">Birthday</label>
+                                    <input type="text" class="form-control" id="birthday" value="{{ user.birthday }}">
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="country">Country</label>
+                                        <input type="text" class="form-control" id="country" value="{{ user.country }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="city">City</label>
+                                        <input type="text" class="form-control" id="city" value="{{ user.city }}">
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="state">State</label>
+                                        <input type="text" class="form-control" id="state" value="{{ user.state }}">
+
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="favorite_player">Favorite player</label>
+                                        <input type="text" class="form-control" id="favorite_player" value="{{ user.favorite_player }}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="team_flair">Team Flair</label>
+                                        <input type="text" class="form-control" id="team_flair" value="{{ user.team_flair }}">
+                                    </div>
+                                </div>
+
+                              <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                             aria-labelledby="pills-profile-tab">Profile tab</div>
+                        <div class="tab-pane fade" id="pills-activity" role="tabpanel"
+                             aria-labelledby="pills-activity-tab">Activity tab</div>
+                        <div class="tab-pane fade" id="pills-notification" role="tabpanel"
+                             aria-labelledby="pills-notification-tab">Notification tab</div>
+                        <div class="tab-pane fade" id="pills-setting" role="tabpanel"
+                             aria-labelledby="pills-setting-tab">Setting tab</div>
                     </div>
                 </div>
 

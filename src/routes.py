@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for, jsonify
 from flask_login import LoginManager, current_user, login_user, logout_user
 
 from src.app import app, login_manager
@@ -6,15 +6,18 @@ from src.form import LoginForm, SignupForm
 from src.mongo import users
 from src.resources.user import User, load_user
 
+import requests
+
+import json
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
 
-@app.route("/teams/<teams>")
-def teams_page(teams):
-    pass
+# @app.route("/teams/<teams>")
+# def teams_page(teams):
+#     pass
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -52,6 +55,58 @@ def signup():
 def contact():
     return render_template("contact.html")
 
-@app.route("/profile", endpoint="profile")
-def contact():
-    return render_template("profile.html")
+
+api_header = {"x-rapidapi-key": "6f6c74eb4dmsh8a7eb445e28acb3p19bf5djsnddf4fd5d7a78"}
+def api_request(request):
+
+    if request == 'countries':
+        url = "https://api-football-v1.p.rapidapi.com/v2/countries"
+    else:
+        url = f"https://api-football-v1.p.rapidapi.com/v2/teams/search/{request}"
+
+    req = requests.get(url, headers=api_header)
+    if not req.content:
+        return None
+
+    return json.loads(req.content)
+
+
+@app.route('/teams', methods=['GET'])
+def teams():
+    response = api_request('countries')
+    return render_template("teams.html", res=response)
+
+# TODO: TRY TO HAVE THE CONTENT AFTER CLICKING. NOW YOU HAVE TO OPEN IT IN ANOTER TAB!!!
+@app.route('/teams/<country>/', methods=['GET'])
+def search_team_country(country):
+    response = api_request(country)
+    return render_template('team_country.html', res=api_request('countries'), team_country=response)
+
+
+ex_user = {
+    "username": "vivian",
+    "email": "yuxuanz8@illinois.edu",
+    "password_hash": "123456",
+    "favorite_player": "Mecy",
+    "team_flair": "Manchester City",
+    "birthday": "1995/10/05",
+    "joined_date": "2020/4/1",
+    "firstname": "Yuxuan",
+    "lastname": "Zhang",
+    "country": "United State",
+    "city": "Champaign",
+    "state": "Illinois",
+    "comments": ["hello, comment 1.", 'hello, comment 2.', 'hello, comment 3.', 'hello, comment 4.']
+}
+
+@app.route("/<username>/home", endpoint="profile")
+def user_home(username):
+    # TODO: ADD BACKEND FUNCTION TO FIND USER FROM THE DATABASE. NOW I JUST ADD ONE DICTIONARY TO THE WEBSITE
+    # TODO: ADD SAVE TO CHANGE THE PROFILE DATA.
+    return render_template("profile.html", user=ex_user)
+
+# TODO: ADD ACTIVITY TAB: LIST COMMENTS
+
+# TODO: ADD NOTIFICATION TAB
+
+# TODO: ADD SETTING TAB: SUSCRIBE / UNSUSCRIBE
