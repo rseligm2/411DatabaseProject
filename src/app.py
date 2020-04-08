@@ -1,8 +1,7 @@
-import secrets
-
 from flask import Flask
 from flask_login import LoginManager
 
+import secrets
 
 app = Flask(__name__)
 login_manager = LoginManager(app)

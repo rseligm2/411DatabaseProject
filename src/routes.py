@@ -12,7 +12,7 @@ from src.app import app, login_manager
 from src.form import LoginForm, SignupForm
 from src.resources.user import User, load_user
 from src.mongo import users_col
-from src.secrets import api_header
+from src.app_secrets import api_header
 
 
 import requests
