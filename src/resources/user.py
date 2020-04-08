@@ -24,11 +24,17 @@ class User:
     _id: str
     username: str
     password_hash: str
-    birthday: datetime
-    email: str
+    favorite_player: str
+    team_flair: str
+    #birthday: str
+    #joined_date: str
+    first_name: str
+    last_name: str
+    country: str
     comments: List[str]
     team_flair: Optional[str] = None
     favorite_player: Optional[str] = None
+
 
     @staticmethod
     def is_authenticated():
