@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+    {% set team=team_info["api"]["teams"][0] %}
+
+<div class="card" id="team_info" style="width: 70%; margin:60px auto">
+    <div class="card-header">
+        <h1>{{ team.name }}</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <img src="{{ team.logo }}" alt="..." width="300px" height="300px" align="middle">
+            </div>
+            <div class="col-lg-6 col-md-6">
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h5>Country</h5>
+                        <p>{{ team.country }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <h5>Founded</h5>
+                        <p>{{ team.founded }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <h5>City</h5>
+                        <p>{{ team.venue_city }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <h5>Stadium</h5>
+                        <p>{{ team.venue_name }}</p>
+                    </li>
+                    <li class="list-group-item">
+                        <h5>Capacity</h5>
+                        <p>{{ team.venue_capacity }}</p>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

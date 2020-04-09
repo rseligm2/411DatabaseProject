@@ -71,11 +71,11 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="firstname">First Name</label>
-                                        <input type="text" class="form-control" id="firstname" value="{{ user.first_name }}">
+                                        <input type="text" class="form-control" id="firstname" value="{{ user.firstname }}">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="lastname">Last Name</label>
-                                        <input type="text" class="form-control" id="lastname" value="{{ user.last_name }}">
+                                        <input type="text" class="form-control" id="lastname" value="{{ user.lastname }}">
                                     </div>
                                 </div>
 
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="inputPassword4">Password</label>
-                                        <input type="password" class="form-control" id="inputPassword4" value="{{ user.password }}">
+                                        <input type="password" class="form-control" id="inputPassword4" value="{{ user.password_hash }}">
                                     </div>
                                 </div>
 
@@ -129,7 +129,28 @@
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                              aria-labelledby="pills-profile-tab">Profile tab</div>
                         <div class="tab-pane fade" id="pills-activity" role="tabpanel"
-                             aria-labelledby="pills-activity-tab">Activity tab</div>
+                             aria-labelledby="pills-activity-tab">
+                            <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Comments</h3>
+                            <div class="border-top my-3"></div>
+                            <ul class="list-group mb-3">
+                                {% for comment in user.comments %}
+                                <li class="media">
+                                    <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
+                                         class="mr-3" alt="..." width ="50" height="50">
+                                    <div class="media-body">
+                                        <!-- it should be a game, team name for the title, not the username-->
+                                        <h3 class="mt-0 mb-1">{{ user.username }}</h3>
+                                        <!-- should include time in the comments object-->
+                                        <span class="text-muted">2020-04-04</span>
+                                        <p>{{ comment }}</p>
+                                        <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                                    </div>
+
+                                </li>
+                                <div class="border-top my-3"></div>
+                            {% endfor %}
+                            </ul>
+                        </div>
                         <div class="tab-pane fade" id="pills-notification" role="tabpanel"
                              aria-labelledby="pills-notification-tab">Notification tab</div>
                         <div class="tab-pane fade" id="pills-setting" role="tabpanel"
