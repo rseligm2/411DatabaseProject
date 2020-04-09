@@ -12,6 +12,8 @@ from src.app import app, login_manager
 from src.form import LoginForm, SignupForm
 from src.resources.user import User, load_user
 from src.mongo import users_col
+from src.app_secrets import api_header
+
 
 import requests
 
@@ -84,7 +86,6 @@ def contact():
     return render_template("contact.html")
 
 
-api_header = {}
 def api_request(request):
 
     if request == 'countries':
