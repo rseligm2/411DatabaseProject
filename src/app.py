@@ -12,4 +12,4 @@ import src.form
 import src.routes
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

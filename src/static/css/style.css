@@ -40,7 +40,7 @@ body, html {
 /* LOGIN and SIGNUP HTML ALL HAVE CLASS: LOGIN*/
 .login {
   width: 400px;
-  margin: 90px auto;
+  margin: 50px auto;
 
   text-align: left;
 }
@@ -61,9 +61,15 @@ body, html {
   text-align: center;
 }
 
+/*#team_info {*/
+    /*width: 60%;*/
+    /*margin: 60px auto;*/
+    /*text-align: left;*/
+/*}*/
+
 #profile {
   width: 80%;
-  margin: 50px auto;
+  margin: 60px auto;
   text-align: left;
 }
 
@@ -74,4 +80,14 @@ body, html {
 
 table {
   width: 80%;
+}
+
+#id_footer {
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 30px;
+    display: block;
+    height: auto;
 }

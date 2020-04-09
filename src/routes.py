@@ -22,6 +22,11 @@ def index():
     return render_template("index.html")
 
 
+# @app.route("/teams/<teams>")
+# def teams_page(teams):
+#     pass
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -58,11 +63,11 @@ def signup():
                     "username": form.username.data,
                     "password_hash": generate_password_hash(form.password.data),
                     "email": form.email.data,
+                    #"birthday": form.birthday.data,
                     "birthday": datetime.datetime.combine(form.birthday.data, datetime.datetime.min.time()),
                     "comments": [],
                 }
             )
-
 
             print(load_user(form.username.data))
             print('Created User')
@@ -79,7 +84,7 @@ def contact():
     return render_template("contact.html")
 
 
-api_header = {"x-rapidapi-key": "6f6c74eb4dmsh8a7eb445e28acb3p19bf5djsnddf4fd5d7a78"}
+api_header = {}
 def api_request(request):
 
     if request == 'countries':
@@ -99,38 +104,51 @@ def teams():
     response = api_request('countries')
     return render_template("teams.html", res=response)
 
-# TODO: TRY TO HAVE THE CONTENT AFTER CLICKING. NOW YOU HAVE TO OPEN IT IN ANOTER TAB!!!
-@app.route('/teams/<country>/', methods=['GET'])
+# TODO: NOW YOU CANNOT CLICK THE LEFTSIDE BAR AND GET TO THAT COUNTRY_TEAM PAGE. HAVE TO OPEN IT IN A NEW TAB
+@app.route('/teams/<country>', methods=['GET'])
 def search_team_country(country):
-    response = api_request(country)
-    return render_template('team_country.html', res=api_request('countries'), team_country=response)
+
+    return render_template('team_country.html', res=api_request('countries'), team_country=api_request(country))
 
 
 ex_user = {
     "username": "vivian",
     "email": "yuxuanz8@illinois.edu",
     "password_hash": "123456",
-    "favorite_player": "Mecy",
+    "favorite_player": "Messi",
     "team_flair": "Manchester City",
     "birthday": "1995/10/05",
     "joined_date": "2020/4/1",
-    "first_name": "Yuxuan",
-    "last_name": "Zhang",
+    "firstname": "Yuxuan",
+    "lastname": "Zhang",
     "country": "United State",
     "city": "Champaign",
     "state": "Illinois",
     "comments": ["hello, comment 1.", 'hello, comment 2.', 'hello, comment 3.', 'hello, comment 4.']
 }
 
+# TODO: ADD BACKEND FUNCTION TO FIND USER FROM THE DATABASE. NOW I JUST ADD ONE DICTIONARY TO THE WEBSITE
+# TODO: ADD SAVE TO CHANGE THE PROFILE DATA.
+@app.route("/<username>/home", endpoint="profile")
+def user_home(username):
 
-@app.route("/<username_test>/home")
-def user_home(username_test):
-    # TODO: ADD BACKEND FUNCTION TO FIND USER FROM THE DATABASE. NOW I JUST ADD ONE DICTIONARY TO THE WEBSITE
-    # TODO: ADD SAVE TO CHANGE THE PROFILE DATA.
     return render_template("profile.html", user=ex_user)
 
-# TODO: ADD ACTIVITY TAB: LIST COMMENTS
-
-# TODO: ADD NOTIFICATION TAB
+# TODO: ACTIVITY TAB: LIST COMMENT, DELETE FUNC
 
 # TODO: ADD SETTING TAB: SUSCRIBE / UNSUSCRIBE
+
+# ============= API ===============
+# Allows you to search for a team in relation to a team {name} or {country}
+# Spaces must be replaced by underscore for better search performance.
+# EX : Real madrid => real_madrid
+# =================================
+# for now api_request can search for country and team_name.
+# !!! may need to change it later for other searches
+# =================================
+
+# name should be right and replace space with _
+@app.route("/teams/search/<name>")
+def team_info(name):
+
+    return render_template("team_info.html", team_info=api_request(name))
