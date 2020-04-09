@@ -20,7 +20,6 @@ from src.mongo import users_col
 
 login_manager.login_view = "login"
 
-
 @dataclass
 class User:
     _id: str
@@ -35,7 +34,6 @@ class User:
     country: Optional[str] = None
     team_flair: Optional[str] = None
     favorite_player: Optional[str] = None
-
 
     @staticmethod
     def is_authenticated():
@@ -57,7 +55,6 @@ class User:
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
 
     def __repr__(self) -> str:
         return f"User(<username: {self.username}, password_hash: {self.password_hash}>)"
