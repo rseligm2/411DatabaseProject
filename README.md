@@ -21,6 +21,9 @@ gunicorn -w 8 app:app
 ## Group Members
 
 Eric Cao
+
 Yuxuan Zhang
+
 Russell Seligmann
+
 Yuxi Wang
