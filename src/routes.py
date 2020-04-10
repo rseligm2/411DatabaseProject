@@ -10,14 +10,15 @@ from werkzeug.security import generate_password_hash
 
 from src.app import app, login_manager
 from src.form import LoginForm, SignupForm
-from src.resources.user import User, load_user
-from src.mongo import users_col
-from src.app_secrets import api_header
+from src.resources.user import User, load_user, Comment
+from src.mongo import users_col, comments_col, team_comments_col
 
+from src.utils import load_from_database
 
 import requests
 
 import json
+
 
 @app.route("/")
 def index():
@@ -39,7 +40,8 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash("Invalid username or password")
             return redirect(url_for("login"))
-        print(f"Login Attempt: {login_user(user)}")
+        # print(f"Login Attempt: {}")
+        login_user(user)
         return redirect(url_for("index"))
     return render_template("login.html", form=form)
 
@@ -59,20 +61,20 @@ def signup():
     if form.validate_on_submit():
         try:
             # Try to create user
-            users_col.insert_one(
-                {
-                    "_id": form.username.data,
-                    "username": form.username.data,
-                    "password_hash": generate_password_hash(form.password.data),
-                    "email": form.email.data,
-                    #"birthday": form.birthday.data,
-                    "birthday": datetime.datetime.combine(form.birthday.data, datetime.datetime.min.time()),
-                    "comments": [],
-                }
-            )
+            form_dict = {
+                "_id": form.username.data,
+                "username": form.username.data,
+                "password_hash": generate_password_hash(form.password.data),
+                "email": form.email.data,
+                # "birthday": form.birthday.data,
+                "birthday": form.birthday.data,
+            }
+            user = User(**form_dict)
 
-            print(load_user(form.username.data))
-            print('Created User')
+            users_col.insert_one(user.to_dict())
+
+            # print(load_user(form.username.data))
+            # print("Created User")
             return redirect(url_for("index"))
         except WriteError:
             flash("Username already taken")
@@ -86,30 +88,21 @@ def contact():
     return render_template("contact.html")
 
 
-def api_request(request):
-
-    if request == 'countries':
-        url = "https://api-football-v1.p.rapidapi.com/v2/countries"
-    else:
-        url = f"https://api-football-v1.p.rapidapi.com/v2/teams/search/{request}"
-
-    req = requests.get(url, headers=api_header)
-    if not req.content:
-        return None
-
-    return json.loads(req.content)
-
-
-@app.route('/teams', methods=['GET'])
+@app.route("/teams", methods=["GET"])
 def teams():
-    response = api_request('countries')
+    response = load_from_database("countries")
     return render_template("teams.html", res=response)
 
+
 # TODO: NOW YOU CANNOT CLICK THE LEFTSIDE BAR AND GET TO THAT COUNTRY_TEAM PAGE. HAVE TO OPEN IT IN A NEW TAB
-@app.route('/teams/<country>', methods=['GET'])
+@app.route("/teams/<country>", methods=["GET"])
 def search_team_country(country):
 
-    return render_template('team_country.html', res=api_request('countries'), team_country=api_request(country))
+    return render_template(
+        "team_country.html",
+        res=load_from_database("countries"),
+        team_country=load_from_database(country),
+    )
 
 
 ex_user = {
@@ -125,7 +118,13 @@ ex_user = {
     "country": "United State",
     "city": "Champaign",
     "state": "Illinois",
-    "comments": ["hello, comment 1.", 'hello, comment 2.', 'hello, comment 3.', 'hello, comment 4.']
+    "comments": [
+        "hello, comment 1.",
+        "hello, comment 2.",
+        "hello, comment 3.",
+        "hello, comment 4.",
+    ],
+    "favorite_teams": [],
 }
 
 # TODO: ADD BACKEND FUNCTION TO FIND USER FROM THE DATABASE. NOW I JUST ADD ONE DICTIONARY TO THE WEBSITE
@@ -134,6 +133,7 @@ ex_user = {
 def user_home(username):
 
     return render_template("profile.html", user=ex_user)
+
 
 # TODO: ACTIVITY TAB: LIST COMMENT, DELETE FUNC
 
@@ -151,9 +151,88 @@ def user_home(username):
 # name should be right and replace space with _
 @app.route("/teams/search/<name>")
 def team_info(name):
+    team = load_from_database(name, request_type="teams")
 
-    return render_template("team_info.html", team_info=api_request(name))
+    res = team_comments_col.aggregate(
+        [
+            {"$match": {"_id": team.name}},
+            {"$unwind": "$comments"},
+            {
+                "$lookup": {
+                    "from": "comments",
+                    "localField": "comments",
+                    "foreignField": "_id",
+                    "as": "_id",
+                }
+            },
+            {"$project":{
+                "_id": 0,
+                "text": "$_id.text",
+                "username": "$_id.username"
+            }}
+        ]
+    )
+    res = list(res)
+    comments = [i["text"][0] if len(i["text"]) > 0 else "" for i in res]
+    usernames = [i["username"][0] if len(i["username"]) > 0 else "" for i in res]
+
+    if comments is not None and len(comments) > 0:
+        team.comments = [Comment(t, u) for t, u in zip(comments, usernames)]
+    return render_template("team_info.html", team_info=team)
+
 
 @app.route("/teams/search")
 def search():
     return render_template("search.html")
+
+
+@app.route("/submit/comment", methods=["POST"])
+def submit_comment():
+    if not current_user.is_authenticated:
+        flash("User is not logged in")
+        return redirect(request.referrer)
+
+    try:
+        # Create comment
+        resp = comments_col.insert_one({"text": request.form["usercomment"], "username": current_user.get_id()})
+
+        # Insert reference into other
+        team_comments_col.update_one(
+            {"_id": request.form["team"]},
+            {"$setOnInsert": {"comments": []},},
+            upsert=True,
+        )
+
+        team_comments_col.update_one(
+            {"_id": request.form["team"]},
+            {"$addToSet": {"comments": resp.inserted_id}},
+        )
+
+        users_col.update_one(
+            {"_id": current_user.get_id()},
+            {"$addToSet": {"comments": resp.inserted_id}},
+        )
+
+    except WriteError as e:
+        # print(e)
+        flash("Failed to post comment")
+
+    # TODO: Create comment
+    return redirect(request.referrer)
+
+
+@app.route("/submit/favorite", methods=["POST"])
+def favorite_team():
+    if not current_user.is_authenticated:
+        return redirect(request.referrer)
+
+    try:
+        users_col.update_one(
+            {"_id": current_user.get_id()},
+            {"$addToSet": {"favorite_teams": request.form["team"]}},
+        )
+    except ...:
+        flash("Failed to favorite team")
+
+    # TODO: Create comment
+    return redirect(request.referrer)

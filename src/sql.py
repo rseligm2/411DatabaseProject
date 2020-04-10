@@ -4,7 +4,9 @@ from typing import Any, Dict, List, Optional, Union
 
 from src.config import SQL_DB_FILE
 
-connection = sql.connect(str(SQL_DB_FILE))
+
+def get_connection():
+    return sql.connect(str(SQL_DB_FILE))
 
 
 @dataclass
@@ -142,6 +144,7 @@ _tables = {
 
 
 def init_database():
+    connection = get_connection()
     cursor = connection.cursor()
     [cursor.execute(com.init_command) for table_name, com in _tables.items()]
     connection.commit()

@@ -6,7 +6,7 @@ from typing import *
 class Team:
     team_id: int
     name: str
-    code: Optional[Any]
+    # code: Optional[Any]
     logo: str
     is_national: bool
     country: str

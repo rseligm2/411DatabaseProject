@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     {# it may return multiple results. So the team should be the same with api database #}
-    {% set team=team_info["api"]["teams"][0] %}
+    {% set team=team_info %}
 
     <div class="card" id="team_info" style="width: 70%; margin:60px auto">
         <div class="card-header">
@@ -9,9 +9,14 @@
 
 {#            <input id="chkToggle1" type="checkbox" data-toggle="toggle" checked>#}
 
-            <p> Save to Favourite
+            <!-- <p> Save to Favourite
                 <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
-            </p>
+            </p> -->
+
+            <form action="{{url_for('favorite_team')}}" method="post">
+                <input name="team" type="text" value="{{ team.name }}" readonly hidden>
+                <p>Save to Favorite <button type="submit" class="btn btn-primary">Favorite</button></p>
+            </form>
         </div>
         <div class="card-body">
             <div class="row">
@@ -65,7 +70,7 @@
                             <!-- it should be a game, team name for the title, not the username-->
                             <h3 class="mt-0 mb-1">{{ comment.username }}</h3>
                             <!-- should include time in the comments object-->
-                            <span class="text-muted">{{ comment.time }}</span>
+                            <!-- <span class="text-muted">{{ comment.time }}</span> -->
                             <p>{{ comment.content }}</p>
                         </div>
                     </li>
@@ -73,14 +78,15 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <div =class"border-top my-3"></div>
+        <div class="border-top my-3"></div>
         {#  Add a comment here  #}
 
         <div class="comment">
             <h4> Add a comment </h4>
-            <form>
+            <form action="{{url_for('submit_comment')}}" method="post">
+                <input name="team" type="text" value="{{ team.name }}" readonly hidden>
                 <div class="form-group">
-                    <textarea class="form-control" id="comment-team" rows="4"></textarea>
+                    <textarea name="usercomment" class="form-control" id="comment-team" rows="4"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" style="float: right;">Comment</button>
             </form>

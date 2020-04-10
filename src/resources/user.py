@@ -1,6 +1,6 @@
 from dataclasses import *
 from typing import *
-from datetime import datetime
+from datetime import datetime, date
 
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import (
@@ -27,13 +27,21 @@ class User:
     password_hash: str
     email: str
     birthday: datetime
-    comments: List[str] = field(default_factory=[])
+    comments: List[str] = field(default_factory=list)
+    favorite_teams: List[str] = field(default_factory=list)
     joined_date: Optional[datetime] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     country: Optional[str] = None
     team_flair: Optional[str] = None
     favorite_player: Optional[str] = None
+
+    def __post_init__(self):
+        if isinstance(self.birthday, date):
+            self.birthday = datetime.combine(self.birthday, datetime.min.time())
+        
+        if self.joined_date is not None and isinstance(self.joined_date, date):
+            self.joined_date = datetime.combine(self.joined_date, datetime.min.time())
 
     @staticmethod
     def is_authenticated():
@@ -59,6 +67,10 @@ class User:
     def __repr__(self) -> str:
         return f"User(<username: {self.username}, password_hash: {self.password_hash}>)"
 
+    def to_dict(self) -> Dict:
+        d = asdict(self)
+        return d
+
 
 @login_manager.user_loader
 def load_user(username):
@@ -67,3 +79,8 @@ def load_user(username):
         return None
     # print(u)
     return User(**u)
+
+@dataclass
+class Comment:
+    content: str
+    username: str

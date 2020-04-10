@@ -45,7 +45,7 @@ def insert_team(team_id):
     #cursor.close()
 
 
-insert_team(33)
+# insert_team(33)
 
 # cursor.execute("SELECT * FROM Teams")
 # print("fetchall:")
