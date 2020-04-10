@@ -1,6 +1,6 @@
 # 411DatabaseProject
 
-##Installation
+## Installation
 
 Use pip to install required packages
 
@@ -10,7 +10,7 @@ pip install -r requirements.txt
 
 MongoDB and SQLite must be installed separately
 
-##Running
+## Running
 
 Use this command to run on localhost:8000
 
@@ -18,7 +18,7 @@ Use this command to run on localhost:8000
 gunicorn -w 8 app:app
 ```
 
-##Group Members
+## Group Members
 
 Eric Cao
 Yuxuan Zhang
