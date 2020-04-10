@@ -138,3 +138,4 @@ dmypy.json
 .vscode/
 .idea/
 .idea/workspace.xml
+app_secrets.py
