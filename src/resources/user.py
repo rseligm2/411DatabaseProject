@@ -84,3 +84,5 @@ def load_user(username):
 class Comment:
     content: str
     username: str
+    team: str
+    _id: Optional[Any] = None

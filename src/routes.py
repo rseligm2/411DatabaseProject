@@ -127,12 +127,49 @@ ex_user = {
     "favorite_teams": [],
 }
 
+
+def user_comments_query(username):
+    res = list(
+        users_col.aggregate(
+            [
+                {"$match": {"_id": username}},
+                {"$unwind": "$comments"},
+                {
+                    "$lookup": {
+                        "from": "comments",
+                        "localField": "comments",
+                        "foreignField": "_id",
+                        "as": "_id",
+                    }
+                },
+                {
+                    "$project": {
+                        "comment": "$_id"
+                    }
+                },
+            ]
+        )
+    )
+
+    res = [obj["comment"][0] for obj in res if len(obj["comment"]) > 0]
+    return [Comment(**obj) for obj in res]
+
+
 # TODO: ADD BACKEND FUNCTION TO FIND USER FROM THE DATABASE. NOW I JUST ADD ONE DICTIONARY TO THE WEBSITE
 # TODO: ADD SAVE TO CHANGE THE PROFILE DATA.
 @app.route("/<username>/home", endpoint="profile")
 def user_home(username):
+    res = users_col.find_one({"_id": username})
 
-    return render_template("profile.html", user=ex_user)
+    if res is not None:
+        user = User(**res)
+
+        user.comments = user_comments_query(username)
+        print(user.comments)
+        return render_template("profile.html", user=user)
+    else:
+        flash("Invalid User")
+        return render_template("profile.html", user=ex_user)
 
 
 # TODO: ACTIVITY TAB: LIST COMMENT, DELETE FUNC
@@ -148,36 +185,44 @@ def user_home(username):
 # !!! may need to change it later for other searches
 # =================================
 
+
+def team_comments_query(teamname):
+    res = list(
+        team_comments_col.aggregate(
+            [
+                {"$match": {"_id": teamname}},
+                {"$unwind": "$comments"},
+                {
+                    "$lookup": {
+                        "from": "comments",
+                        "localField": "comments",
+                        "foreignField": "_id",
+                        "as": "_id",
+                    }
+                },
+                {
+                    "$project": {
+                        "comment": "$_id"
+                    }
+                },
+            ]
+        )
+    )
+
+    print(list(res))
+    res = [obj["comment"][0] for obj in res if len(obj["comment"]) > 0]
+    return [Comment(**obj) for obj in res]
+
+
 # name should be right and replace space with _
 @app.route("/teams/search/<name>")
 def team_info(name):
     team = load_from_database(name, request_type="teams")
 
-    res = team_comments_col.aggregate(
-        [
-            {"$match": {"_id": team.name}},
-            {"$unwind": "$comments"},
-            {
-                "$lookup": {
-                    "from": "comments",
-                    "localField": "comments",
-                    "foreignField": "_id",
-                    "as": "_id",
-                }
-            },
-            {"$project":{
-                "_id": 0,
-                "text": "$_id.text",
-                "username": "$_id.username"
-            }}
-        ]
-    )
-    res = list(res)
-    comments = [i["text"][0] if len(i["text"]) > 0 else "" for i in res]
-    usernames = [i["username"][0] if len(i["username"]) > 0 else "" for i in res]
+    comments = team_comments_query(team.name)
 
     if comments is not None and len(comments) > 0:
-        team.comments = [Comment(t, u) for t, u in zip(comments, usernames)]
+        team.comments = comments
     return render_template("team_info.html", team_info=team)
 
 
@@ -194,7 +239,13 @@ def submit_comment():
 
     try:
         # Create comment
-        resp = comments_col.insert_one({"text": request.form["usercomment"], "username": current_user.get_id()})
+        resp = comments_col.insert_one(
+            {
+                "content": request.form["usercomment"],
+                "username": current_user.get_id(),
+                "team": request.form["team"],
+            }
+        )
 
         # Insert reference into other
         team_comments_col.update_one(
@@ -233,6 +284,35 @@ def favorite_team():
         )
     except ...:
         flash("Failed to favorite team")
+
+    # TODO: Create comment
+    return redirect(request.referrer)
+
+@app.route("/submit/remove_comment", methods=["POST"])
+def remove_comment():
+    if not current_user.is_authenticated:
+        return redirect(request.referrer)
+
+    if current_user.get_id() != request.form["username"]:
+        return redirect(request.referrer)
+    
+    # Try to remove from all three collections
+    try:
+        _id = ObjectId(request.form["_id"])
+        comments_col.delete_one({"_id": _id})
+
+        team_comments_col.update_one(
+            {"_id": request.form["team"]},
+            {"$pullAll": {"comments": _id}},
+        )
+
+        users_col.update_one(
+            {"_id": request.form["username"]},
+            {"$pullAll": {"comments": _id}},
+        )
+
+    except WriteError:
+        flash("Failed to remove comment")
 
     # TODO: Create comment
     return redirect(request.referrer)

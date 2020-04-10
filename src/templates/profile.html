@@ -2,171 +2,184 @@
 
 {% block content %}
 
-        <div class="container" id="profile">
-            <div class="row">
-                <div class="col-lg-3 col-md-3">
-                    <div class="ui card">
-                        <div class="image">
-                            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60">
-                        </div>
-                        <div class="content">
-                            <a class="header">{{ user.username }}</a>
-                            <div class="meta">
-                                <span class="date">{{ user.joined_date }}</span>
-                            </div>
-                            <div class="description">
-                                Kristy is an art director living in New York.
-                            </div>
-                        </div>
-                        <div class="extra content">
-                            <a>
-                              <i class="user icon"></i>
-                              22 Friends
-                            </a>
-                        </div>
+<div class="container" id="profile">
+    <div class="row">
+        <div class="col-lg-3 col-md-3">
+            <div class="ui card">
+                <div class="image">
+                    <img
+                        src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60">
+                </div>
+                <div class="content">
+                    <a class="header">{{ user.username }}</a>
+                    <div class="meta">
+                        <span class="date">{{ user.joined_date }}</span>
+                    </div>
+                    <div class="description">
+                        Lorem Ipsum.
                     </div>
                 </div>
-
-                <div class="col-9">
-                    <ul class="nav nav-tabs" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill"
-                               href="#pills-home" role="tab" aria-controls="pills-profile" aria-selected="true">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill"
-                               href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-activity-tab" data-toggle="pill"
-                               href="#pills-activity" role="tab" aria-controls="pills-activity" aria-selected="false">Activity</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-notification-tab" data-toggle="pill"
-                               href="#pills-notification" role="tab" aria-controls="pills-notification" aria-selected="false">Notification</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-setting-tab" data-toggle="pill"
-                               href="#pills-setting" role="tab" aria-controls="pills-setting" aria-selected="false">Setting</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                             aria-labelledby="pills-home-tab">
-                            <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Personal Information</h3>
-                            <div class="border-top my-3"></div>
-
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" value="{{ user.username }}" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="firstname">First Name</label>
-                                        <input type="text" class="form-control" id="firstname" value="{{ user.firstname }}">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="lastname">Last Name</label>
-                                        <input type="text" class="form-control" id="lastname" value="{{ user.lastname }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Email</label>
-                                        <input type="email" class="form-control" id="inputEmail4" value="{{ user.email }}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Password</label>
-                                        <input type="password" class="form-control" id="inputPassword4" value="{{ user.password_hash }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="birthday">Birthday</label>
-                                    <input type="text" class="form-control" id="birthday" value="{{ user.birthday }}">
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="country">Country</label>
-                                        <input type="text" class="form-control" id="country" value="{{ user.country }}">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="city">City</label>
-                                        <input type="text" class="form-control" id="city" value="{{ user.city }}">
-
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="state">State</label>
-                                        <input type="text" class="form-control" id="state" value="{{ user.state }}">
-
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="favorite_player">Favorite player</label>
-                                        <input type="text" class="form-control" id="favorite_player" value="{{ user.favorite_player }}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="team_flair">Team Flair</label>
-                                        <input type="text" class="form-control" id="team_flair" value="{{ user.team_flair }}">
-                                    </div>
-                                </div>
-
-                              <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        </div>
-
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                             aria-labelledby="pills-profile-tab">Profile tab</div>
-                        <div class="tab-pane fade" id="pills-activity" role="tabpanel"
-                             aria-labelledby="pills-activity-tab">
-                            <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Comments</h3>
-                            <div class="border-top my-3"></div>
-                            <ul class="list-group mb-3">
-                                {% for comment in user.comments %}
-                                <li class="media">
-                                    <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
-                                         class="mr-3" alt="..." width ="50" height="50">
-                                    <div class="media-body">
-                                        <!-- it should be a game, team name for the title, not the username-->
-                                        <h3 class="mt-0 mb-1">{{ user.username }}</h3>
-                                        <!-- should include time in the comments object-->
-                                        <span class="text-muted">2020-04-04</span>
-                                        <p>{{ comment }}</p>
-                                        <button type="button" class="btn btn-sm btn-danger">Delete</button>
-                                    </div>
-
-                                </li>
-                                <div class="border-top my-3"></div>
-                            {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="tab-pane fade" id="pills-notification" role="tabpanel"
-                             aria-labelledby="pills-notification-tab">Notification tab</div>
-                        <div class="tab-pane fade" id="pills-setting" role="tabpanel"
-                             aria-labelledby="pills-setting-tab">Setting tab</div>
-                    </div>
+                <div class="extra content">
+                    <a>
+                        <i class="user icon"></i>
+                        22 Friends
+                    </a>
                 </div>
-
-
             </div>
         </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $('#nav-pills').on('click', function(){ $(this).tab('show')}); // Select first tab
-    </script>
+        <div class="col-9">
+            <ul class="nav nav-tabs" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                        aria-controls="pills-profile" aria-selected="true">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                        aria-controls="pills-profile" aria-selected="false">Profile</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-activity-tab" data-toggle="pill" href="#pills-activity" role="tab"
+                        aria-controls="pills-activity" aria-selected="false">Activity</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-notification-tab" data-toggle="pill" href="#pills-notification"
+                        role="tab" aria-controls="pills-notification" aria-selected="false">Notification</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-setting-tab" data-toggle="pill" href="#pills-setting" role="tab"
+                        aria-controls="pills-setting" aria-selected="false">Setting</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Personal Information</h3>
+                    <div class="border-top my-3"></div>
+
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" value="{{ user.username }}"
+                                    disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="firstname">First Name</label>
+                                <input type="text" class="form-control" id="firstname" value="{{ user.firstname }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="lastname">Last Name</label>
+                                <input type="text" class="form-control" id="lastname" value="{{ user.lastname }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Email</label>
+                                <input type="email" class="form-control" id="inputEmail4" value="{{ user.email }}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Password</label>
+                                <input type="password" class="form-control" id="inputPassword4"
+                                    value="{{ user.password_hash }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthday">Birthday</label>
+                            <input type="text" class="form-control" id="birthday" value="{{ user.birthday }}">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="country">Country</label>
+                                <input type="text" class="form-control" id="country" value="{{ user.country }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" value="{{ user.city }}">
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="state">State</label>
+                                <input type="text" class="form-control" id="state" value="{{ user.state }}">
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="favorite_player">Favorite player</label>
+                                <input type="text" class="form-control" id="favorite_player"
+                                    value="{{ user.favorite_player }}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="team_flair">Team Flair</label>
+                                <input type="text" class="form-control" id="team_flair" value="{{ user.team_flair }}">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    Profile tab</div>
+                <div class="tab-pane fade" id="pills-activity" role="tabpanel" aria-labelledby="pills-activity-tab">
+                    <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Comments</h3>
+                    <div class="border-top my-3"></div>
+                    <ul class="list-group mb-3">
+                        {% for comment in user.comments %}
+                        <li class="media">
+                            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
+                                class="mr-3" alt="..." width="50" height="50">
+                            <div class="media-body">
+                                <!-- it should be a game, team name for the title, not the username-->
+                                <h3 class="mt-0 mb-1">{{ comment.username }}</h3>
+                                <!-- should include time in the comments object-->
+                                <!-- <span class="text-muted">2020-04-04</span> -->
+                                <p>{{ comment.content }}</p>
+                                <form action="{{url_for('remove_comment')}}" method="post">
+                                    <input name="username" type="text" value="{{ comment.username }}" readonly hidden>
+                                    <input name="team" type="text" value="{{ comment.team }}" readonly hidden>
+                                    <input name="_id" type="text" value="{{ comment._id }}" readonly hidden>
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </div>
+
+                        </li>
+                        <div class="border-top my-3"></div>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="pills-notification" role="tabpanel"
+                    aria-labelledby="pills-notification-tab">Notification tab</div>
+                <div class="tab-pane fade" id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
+                    Setting tab</div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $('#nav-pills').on('click', function () { $(this).tab('show') }); // Select first tab
+</script>
 
 {% endblock %}
