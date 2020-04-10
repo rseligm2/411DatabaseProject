@@ -15,7 +15,7 @@ MongoDB and SQLite must be installed separately
 Use this command to run on localhost:8000
 
 ```bash
-gunicorn -w 8 app:app
+gunicorn wsgi:app
 ```
 
 ## Group Members
