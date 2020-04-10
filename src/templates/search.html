@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" id="search">
+    <div class="jumbotron">
+        <h3>
+            <svg class="bi bi-search" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
+            </svg>
+            Search for teams
+        </h3>
+        <div class="input-group input-group-lg">
+
+
+            <input type="text" class="form-control" placeholder="">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+            </div>
+        </div>
+        <p>You can search teams in each country or the team information by name.</p>
+    </div>
+    {% set teams = [
+    {"name": "Manchester United", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png"},
+    {"name": "Manchester City", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Manchester_City_FC_badge.svg/1200px-Manchester_City_FC_badge.svg.png"},
+    {"name": "Real Madrid", "image": "https://cdn.freebiesupply.com/logos/large/2x/real-madrid-c-f-logo-png-transparent.png"},
+    {"name": "Barcelona", "image": "https://brandslogo.net/wp-content/uploads/2018/10/new-fc-barcelona-logo.png"},
+    {"name": "Bayern Munich", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg/1200px-FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg.png"},
+    {"name": "AC Milan", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_of_AC_Milan.svg/1200px-Logo_of_AC_Milan.svg.png"},
+    {"name": "Liverpool", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Liverpool_FC.svg/1200px-Liverpool_FC.svg.png"},
+    {"name": "Paris Saint", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/1200px-Paris_Saint-Germain_F.C..svg.png"}
+    ] %}
+    <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+        {% for team in teams %}
+        <div class="col-md-3 col-sm-6" style="margin-bottom: 20px">
+            <div class="thumbnail">
+                <img src= "{{ team.image }}" width="130px" height="130px">
+
+                <h5 class="caption">
+                    {{ team.name }}
+                </h5>
+                <p>
+                    <a href="/teams/search/{{ team.name.replace(" ", "_") }}" class="btn btn-info">More Info</a>
+                </p>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

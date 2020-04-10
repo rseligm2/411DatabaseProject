@@ -1,46 +1,92 @@
 {% extends "base.html" %}
 {% block content %}
+    {# it may return multiple results. So the team should be the same with api database #}
     {% set team=team_info["api"]["teams"][0] %}
 
-<div class="card" id="team_info" style="width: 70%; margin:60px auto">
-    <div class="card-header">
-        <h1>{{ team.name }}</h1>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <img src="{{ team.logo }}" alt="..." width="300px" height="300px" align="middle">
+    <div class="card" id="team_info" style="width: 70%; margin:60px auto">
+        <div class="card-header">
+            <h1>{{ team.name }}</h1>
+
+{#            <input id="chkToggle1" type="checkbox" data-toggle="toggle" checked>#}
+
+            <p> Save to Favourite
+                <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
+            </p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <img src="{{ team.logo }}" alt="..." width="300px" height="300px" align="middle">
+                </div>
+                <div class="col-lg-6 col-md-6">
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h5>Country</h5>
+                            <p>{{ team.country }}</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Founded</h5>
+                            <p>{{ team.founded }}</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>City</h5>
+                            <p>{{ team.venue_city }}</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Stadium</h5>
+                            <p>{{ team.venue_name }}</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Capacity</h5>
+                            <p>{{ team.venue_capacity }}</p>
+                        </li>
+
+                    </ul>
+
+                </div>
             </div>
-            <div class="col-lg-6 col-md-6">
-
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <h5>Country</h5>
-                        <p>{{ team.country }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <h5>Founded</h5>
-                        <p>{{ team.founded }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <h5>City</h5>
-                        <p>{{ team.venue_city }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <h5>Stadium</h5>
-                        <p>{{ team.venue_name }}</p>
-                    </li>
-                    <li class="list-group-item">
-                        <h5>Capacity</h5>
-                        <p>{{ team.venue_capacity }}</p>
-                    </li>
-
-                </ul>
-
-            </div>
-
         </div>
     </div>
-</div>
+
+    <div class="container" style="width: 70%; margin:60px auto" >
+{#  LIST THE CONTENT HERE   #}
+        <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Comments</h3>
+        <div class="border-top my-3"></div>
+        {% if team.comments %}
+            <ul class="list-group mb-3">
+
+                {% for comment in team.comments %}
+                    <li class="media">
+                        {# user photo #}
+                        <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
+                             class="mr-3" alt="..." width ="50" height="50">
+                        <div class="media-body">
+                            <!-- it should be a game, team name for the title, not the username-->
+                            <h3 class="mt-0 mb-1">{{ comment.username }}</h3>
+                            <!-- should include time in the comments object-->
+                            <span class="text-muted">{{ comment.time }}</span>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    </li>
+                    <div class="border-top my-3"></div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div =class"border-top my-3"></div>
+        {#  Add a comment here  #}
+
+        <div class="comment">
+            <h4> Add a comment </h4>
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" id="comment-team" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="float: right;">Comment</button>
+            </form>
+        </div>
+
+    </div>
+
 
 {% endblock %}

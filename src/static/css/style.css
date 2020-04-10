@@ -91,3 +91,8 @@ table {
     display: block;
     height: auto;
 }
+
+#search {
+    width: 80%;
+    margin: 70px auto;
+}
