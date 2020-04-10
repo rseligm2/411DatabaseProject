@@ -12,7 +12,8 @@ from src.app import app, login_manager
 from src.form import LoginForm, SignupForm
 from src.resources.user import User, load_user
 from src.mongo import users_col
-#from src.app_secrets import api_header
+from src.app_secrets import api_header
+
 
 import requests
 
@@ -21,6 +22,11 @@ import json
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+# @app.route("/teams/<teams>")
+# def teams_page(teams):
+#     pass
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -59,6 +65,7 @@ def signup():
                     "username": form.username.data,
                     "password_hash": generate_password_hash(form.password.data),
                     "email": form.email.data,
+                    #"birthday": form.birthday.data,
                     "birthday": datetime.datetime.combine(form.birthday.data, datetime.datetime.min.time()),
                     "comments": [],
                 }
@@ -78,7 +85,7 @@ def signup():
 def contact():
     return render_template("contact.html")
 
-api_header = {"x-rapidapi-key": "6f6c74eb4dmsh8a7eb445e28acb3p19bf5djsnddf4fd5d7a78"}
+
 def api_request(request):
 
     if request == 'countries':
@@ -150,4 +157,3 @@ def team_info(name):
 @app.route("/teams/search")
 def search():
     return render_template("search.html")
-
