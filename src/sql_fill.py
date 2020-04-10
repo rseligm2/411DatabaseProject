@@ -47,6 +47,27 @@ def insert_team(team_id):
 
 # insert_team(33)
 
+query = """
+
+SELECT A_name, B_name, AVG(Sim) AS Sim
+FROM
+(
+SELECT A_name, B_name, (CAST(ABS(A_cap - B_cap) AS float) / CAST(A_cap AS float)) AS Sim FROM
+
+(SELECT A.name AS A_name, B.name AS B_name, A.venue_capacity AS A_cap, B.venue_capacity AS B_cap 
+FROM Teams A, Teams B
+WHERE A.team_id <> B.team_id AND A.venue_surface = B.venue_surface)
+
+ORDER BY (CAST(ABS(A_cap - B_cap) AS float) / CAST(A_cap AS float))
+)
+GROUP BY A_name
+
+ORDER BY Sim DESC
+"""
+
+print(list(cursor.execute(query)))
+connection.commit()
+
 # cursor.execute("SELECT * FROM Teams")
 # print("fetchall:")
 # result = cursor.fetchall()
