@@ -14,3 +14,4 @@ def get_players_on_team(team_id):
     url = base_url + "players/team/" + str(team_id)
     response = requests.request("GET", url, headers=headers)
     return response.text
+

@@ -45,6 +45,45 @@ def insert_team(team_id):
     #cursor.close()
 
 
+def insert_player(player):
+    format_str = """INSERT INTO Players (
+            player_id,
+            player_name,
+            firstname,
+            lastname,
+            number,
+            position,
+            age,
+            birth_date,
+            birth_place,
+            birth_country,
+            nationality,
+            height,
+            weight)
+            VALUES ( "{player_id}", "{player_name}", "{firstname}", "{lastname}", "{number}", "{position}", "{age}", "{birth_date}", "{birth_place}", "{birth_country}", "{nationality}", "{height}", "{weight}");"""
+    command = format_str.format(
+        player_id=player["player_id"],
+        player_name=player["player_name"],
+        firstname=player["firstname"],
+        lastname=player["lastname"],
+        number=player["number"],
+        position=player["position"],
+        age=player["age"],
+        birth_date=player["birth_date"],
+        birth_place=player["birth_place"],
+        birth_country=player["birth_country"],
+        nationality=player["nationality"],
+        height=player["height"],
+        weight=player["weight"]
+    )
+    try:
+        cursor.execute(command)
+    except sql.IntegrityError:
+        print("player_id not unique: ")
+
+    connection.commit()
+
+
 # insert_team(33)
 
 query = """
