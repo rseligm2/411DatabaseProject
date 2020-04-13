@@ -46,6 +46,12 @@ def insert_team(team_id):
 
 
 def insert_player(player):
+    """Input individual player object into db:
+        example:
+
+        players = data["api"]["players"]
+        for player in players:
+            insert_player(player)"""
     format_str = """INSERT INTO Players (
             player_id,
             player_name,
@@ -83,6 +89,113 @@ def insert_player(player):
 
     connection.commit()
 
+
+def insert_player_stats(player):
+    """Input individual player object into db:
+        example:
+
+        players = data["api"]["players"]
+        for player in players:
+            insert_player(player)"""
+    format_str = """INSERT INTO PlayerStats (
+            player_id,
+            injured,
+            rating,
+            team_id,
+            team_name,
+            league,
+            season,
+            captain,
+            shots_total,
+            shots_on,
+            goals_total,
+            goals_conceded,
+            goals_assists,
+            passes_total,
+            passes_key, 
+            passes_accuracy,
+            tackles_total,
+            tackles_blocks,
+            tackles_interceptions,
+            duels_total,
+            duels_won,
+            dribbles_attempts,
+            dribbles_success,
+            fouls_draw,
+            fouls_committed,
+            cards_yellow,
+            cards_yellowred,
+            cards_red,
+            penalty_won,
+            penalty_commited,
+            penalty_success,
+            penalty_missed,
+            penalty_saved,
+            games_appearances,
+            games_minutes_played,
+            games_lineups,
+            substitutes_in,
+            substitutes_out,
+            substitutes_bench)
+            VALUES ("{player_id}", "{injured}", "{rating}", "{team_id}", "{team_name}", "{league}", "{season}", "{captain}", "{shots_total}", "{shots_on}", "{goals_total}", "{goals_conceded}", "{goals_assists}", "{passes_total}", "{passes_key}", "{passes_accuracy}", "{tackles_total}", "{tackles_blocks}", "{tackles_interceptions}", "{duels_total}", "{duels_won}", "{dribbles_attempts}", "{dribbles_success}", "{fouls_draw}", "{fouls_committed}", "{cards_yellow}", "{cards_yellowred}", "{cards_red}", "{penalty_won}", "{penalty_commited}", "{penalty_success}", "{penalty_missed}", "{penalty_saved}", "{games_appearances}", "{games_minutes_played}", "{games_lineups}", "{substitutes_in}", "{substitutes_out}", "{substitutes_bench}");"""
+    command = format_str.format(
+        player_id=player["player_id"],
+        injured=player["injured"],
+        rating=player["rating"],
+        team_id=player["team_id"],
+        team_name=player["team_name"],
+        league=player["league"],
+        season=player["season"],
+        captain=player["captain"],
+
+        shots_total=player["shots"]["total"],
+        shots_on=player["shots"]["on"],
+
+        goals_total=player["goals"]["total"],
+        goals_conceded=player["goals"]["conceded"],
+        goals_assists=player["goals"]["assists"],
+
+        passes_total=player["passes"]["total"],
+        passes_accuracy=player["passes"]["accuracy"],
+        passes_key=0,  # Value not given by api
+
+        tackles_total=player["tackles"]["total"],
+        tackles_blocks=player["tackles"]["blocks"],
+        tackles_interceptions=player["tackles"]["interceptions"],
+
+        duels_total=player["duels"]["total"],
+        duels_won=player["duels"]["won"],
+
+        dribbles_attempts=player["dribbles"]["attempts"],
+        dribbles_success=player["dribbles"]["success"],
+
+        fouls_draw=player["fouls"]["drawn"],
+        fouls_committed=player["fouls"]["committed"],
+
+        cards_yellow=player["cards"]["ellow"],
+        cards_yellowred=player["cards"]["yellowred"],
+        cards_red=player["cards"]["red"],
+
+        penalty_success=player["penalty"]["success"],
+        penalty_missed=player["penalty"]["missed"],
+        penalty_saved=player["penalty"]["saved"],
+        penalty_won=0,  # Value not given by api
+        penalty_commited=0,  # Value not given by api
+
+        games_appearances=player["games"]["appearances"],
+        games_minutes_played=player["games"]["minutes_played"],
+        games_lineups=player["games"]["lineups"],
+
+        substitutes_in=player["substitutes"]["in"],
+        substitutes_out=player["substitutes"]["out"],
+        substitutes_bench=player["substitutes"]["bench"]
+    )
+    try:
+        cursor.execute(command)
+    except sql.IntegrityError:
+        print("player_id not unique: ")
+
+    connection.commit()
 
 # insert_team(33)
 
