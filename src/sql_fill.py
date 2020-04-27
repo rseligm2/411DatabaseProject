@@ -96,7 +96,7 @@ def insert_player_stats(player):
 
         players = data["api"]["players"]
         for player in players:
-            insert_player(player)"""
+            insert_player_stats(player)"""
     format_str = """INSERT INTO PlayerStats (
             player_id,
             injured,
@@ -137,7 +137,7 @@ def insert_player_stats(player):
             substitutes_in,
             substitutes_out,
             substitutes_bench)
-            VALUES ("{player_id}", "{injured}", "{rating}", "{team_id}", "{team_name}", "{league}", "{season}", "{captain}", "{shots_total}", "{shots_on}", "{goals_total}", "{goals_conceded}", "{goals_assists}", "{passes_total}", "{passes_key}", "{passes_accuracy}", "{tackles_total}", "{tackles_blocks}", "{tackles_interceptions}", "{duels_total}", "{duels_won}", "{dribbles_attempts}", "{dribbles_success}", "{fouls_draw}", "{fouls_committed}", "{cards_yellow}", "{cards_yellowred}", "{cards_red}", "{penalty_won}", "{penalty_commited}", "{penalty_success}", "{penalty_missed}", "{penalty_saved}", "{games_appearances}", "{games_minutes_played}", "{games_lineups}", "{substitutes_in}", "{substitutes_out}", "{substitutes_bench}");"""
+            VALUES ("{player_id}", "{injured}", "{rating}", "{team_id}", "{team_name}", "{league}", "{season}", "{captain}", "{shots_total}", "{shots_on}", "{goals_total}", "{goals_conceded}", "{goals_assists}", "{passes_key}", "{passes_total}", "{passes_accuracy}", "{tackles_total}", "{tackles_blocks}", "{tackles_interceptions}", "{duels_total}", "{duels_won}", "{dribbles_attempts}", "{dribbles_success}", "{fouls_draw}", "{fouls_committed}", "{cards_yellow}", "{cards_yellowred}", "{cards_red}", "{penalty_won}", "{penalty_commited}", "{penalty_success}", "{penalty_missed}", "{penalty_saved}", "{games_appearances}", "{games_minutes_played}", "{games_lineups}", "{substitutes_in}", "{substitutes_out}", "{substitutes_bench}");"""
     command = format_str.format(
         player_id=player["player_id"],
         injured=player["injured"],
@@ -155,9 +155,9 @@ def insert_player_stats(player):
         goals_conceded=player["goals"]["conceded"],
         goals_assists=player["goals"]["assists"],
 
+        passes_key=0,
         passes_total=player["passes"]["total"],
         passes_accuracy=player["passes"]["accuracy"],
-        passes_key=0,  # Value not given by api
 
         tackles_total=player["tackles"]["total"],
         tackles_blocks=player["tackles"]["blocks"],
@@ -172,17 +172,17 @@ def insert_player_stats(player):
         fouls_draw=player["fouls"]["drawn"],
         fouls_committed=player["fouls"]["committed"],
 
-        cards_yellow=player["cards"]["ellow"],
+        cards_yellow=player["cards"]["yellow"],
         cards_yellowred=player["cards"]["yellowred"],
         cards_red=player["cards"]["red"],
 
         penalty_success=player["penalty"]["success"],
         penalty_missed=player["penalty"]["missed"],
         penalty_saved=player["penalty"]["saved"],
-        penalty_won=0,  # Value not given by api
-        penalty_commited=0,  # Value not given by api
+        penalty_won=player["penalty"]["won"],
+        penalty_commited=player["penalty"]["commited"],
 
-        games_appearances=player["games"]["appearances"],
+        games_appearances=player["games"]["appearences"],
         games_minutes_played=player["games"]["minutes_played"],
         games_lineups=player["games"]["lineups"],
 

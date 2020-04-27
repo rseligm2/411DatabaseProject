@@ -69,7 +69,6 @@ _tables = {
             goals_assists integer,
 
             passes_total integer,
-            passes_key integer,
             passes_accuracy float,
 
             tackles_total integer,
@@ -89,8 +88,6 @@ _tables = {
             cards_yellowred integer,
             cards_red integer,
     
-            penalty_won integer,
-            penalty_commited integer,
             penalty_success integer,
             penalty_missed integer,
             penalty_saved integer,
