@@ -40,7 +40,10 @@ def insert_team(team):
         venue_city=team["venue_city"],
         venue_capacity=team["venue_capacity"]
     )
-    cursor.execute(command)
+    try:
+        cursor.execute(command)
+    except sql.IntegrityError:
+        print("team_id not unique: ")
     connection.commit()
     #cursor.close()
 
