@@ -8,12 +8,12 @@ connection = sql.connect(str(SQL_DB_FILE))
 cursor = connection.cursor()
 
 
-def insert_team(team_id):
+def insert_team(team):
     # raw_data = get_team(team_id)
-    raw_data = '{"api":{"results":1,"teams":[{"team_id":33,"name":"Manchester United","code":"MUN","logo":"https:\/\/media.api-sports.io\/teams\/33.png","country":"England","is_national":false,"founded":1878,"venue_name":"Old Trafford","venue_surface":"grass","venue_address":"Sir Matt Busby Way","venue_city":"Manchester","venue_capacity":76212}]}}'
+    # raw_data = '{"api":{"results":1,"teams":[{"team_id":33,"name":"Manchester United","code":"MUN","logo":"https:\/\/media.api-sports.io\/teams\/33.png","country":"England","is_national":false,"founded":1878,"venue_name":"Old Trafford","venue_surface":"grass","venue_address":"Sir Matt Busby Way","venue_city":"Manchester","venue_capacity":76212}]}}'
     # print(raw_data)
-    data = json.loads(raw_data)
-    team = data["api"]["teams"][0]
+    # data = json.loads(raw_data)
+    # team = data["api"]["teams"][0]
     format_str = """INSERT INTO Teams (
         team_id,
         name,

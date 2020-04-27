@@ -15,6 +15,7 @@ def get_players_on_team(team_id):
     response = requests.request("GET", url, headers=headers)
     return response.text
 
+
 def get_teams_from_league(league_id):
     url = base_url + "teams/league/" + str(league_id)
     response = requests.request("GET", url, headers=headers)
