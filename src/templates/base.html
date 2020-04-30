@@ -21,27 +21,46 @@
 </head>
 
 <body>
+
     <div class="ui fixed inverted menu">
         <div class="ui container">
-            <div class="header item"><i class="futbol icon"></i> YourSoccer </div>
+            <div class="header item"><i class="futbol icon"></i> SoccerSTAT </div>
             <a href="{{ url_for('index') }}" class="item">Home</a>
             <a href="#" class="item">Game</a>
             <a href="{{ url_for('teams') }}" class="item">Team</a>
             <a href="#" class="item">Player</a>
             <a href="{{ url_for('contact')}}" class="item">Contact</a>
             <div class="right menu">
-                {% if current_user.is_anonymous %}
-                <a href="{{ url_for('signup')}}" class="item"><i class="user plus icon"></i>Sign up</a>
-                <a href="{{ url_for('login') }}" class="item"><i class="user icon"></i>Log-in</a>
+                {% if not current_user.is_authenticated %}
+                    <a href="{{ url_for('signup')}}" class="item"><i class="user plus icon"></i>Sign up</a>
+                    <a href="{{ url_for('login') }}" class="item"><i class="user icon"></i>Log-in</a>
                 {% else %}
-                <a href="{{ url_for('logout') }}" class="item">Logout</a>
+                    <div class="item">Signed in As {{ current_user.username }}</div>
+                    <a href="{{ url_for('logout') }}" class="item">Logout</a>
+                    <a href="{{ url_for('profile', username = current_user.username) }}" class="item">Profile</a>
                 {% endif %}
             </div>
         </div>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+
+                    <div class="alert alert-{{ category }}" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
 
     </div>
 
-    {% block content %}{% endblock %}
+
     <footer id="id_footer" style="text-align: center">
         <div class="row">
             <div class="col-12 col-md">

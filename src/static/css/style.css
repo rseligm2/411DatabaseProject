@@ -1,13 +1,14 @@
 body, html {
     height: 100%;
+    margin-top:25px;
 }
 
 /* The hero image */
 .hero-banner {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1)),
        url('soccerbackground.jpg');
-  margin-top: 40px;
+  margin-top: 50px;
 
   /* Set a specific height */
   height: 440px;
@@ -26,16 +27,18 @@ body, html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: rgb(252, 248, 3);
+  /*color: rgb(252, 248, 3);*/
+    color: rgb(245, 66, 147);
+
 }
 
-.hero-header {
-/*  padding-top: 25%;*/
-  line-height: normal;
-  /*color: #32CD32;*/
-  font-size: 7em;
-  font-weight: 8;
-}
+/*.hero-header {*/
+/*!*  padding-top: 25%;*!*/
+  /*line-height: normal;*/
+  /*!*color: #32CD32;*!*/
+  /*font-size: 5em;*/
+  /*font-weight: 8;*/
+/*}*/
 
 /* LOGIN and SIGNUP HTML ALL HAVE CLASS: LOGIN*/
 .login {
@@ -93,6 +96,5 @@ table {
 }
 
 #search {
-    width: 80%;
     margin: 70px auto;
 }

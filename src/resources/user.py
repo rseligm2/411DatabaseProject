@@ -16,7 +16,7 @@ from werkzeug.urls import url_parse
 from src.app import app, login_manager
 from src.mongo import users_col
 
-
+from hashlib import md5
 
 login_manager.login_view = "login"
 
@@ -42,6 +42,10 @@ class User:
         
         if self.joined_date is not None and isinstance(self.joined_date, date):
             self.joined_date = datetime.combine(self.joined_date, datetime.min.time())
+
+    def avatar(self):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=retro&s=128'.format(digest)
 
     @staticmethod
     def is_authenticated():

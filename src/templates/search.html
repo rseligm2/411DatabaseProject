@@ -7,17 +7,26 @@
                 <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
                 <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
             </svg>
-            Search for teams
+            Search
         </h3>
+
+
         <div class="input-group input-group-lg">
+            <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                <option selected>Choose...</option>
+                <option value="Country">Country</option>
+                <option value="Team">Team</option>
+                <option value="Player">Player</option>
+            </select>
 
-
-            <input type="text" class="form-control" placeholder="">
+            <input type="text" class="form-control">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+                <button class="btn btn-outline-secondary" type="button">Search</button>
             </div>
         </div>
-        <p>You can search teams in each country or the team information by name.</p>
+
+
+{#        <p>You can search teams in each country or the team information by name.</p>#}
     </div>
     {% set teams = [
     {"name": "Manchester United", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png"},

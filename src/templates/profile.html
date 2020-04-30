@@ -7,8 +7,9 @@
         <div class="col-lg-3 col-md-3">
             <div class="ui card">
                 <div class="image">
-                    <img
-                        src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60">
+{#                    <img#}
+{#                        src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60">#}
+                    <img src="{{ user.avatar() }}">
                 </div>
                 <div class="content">
                     <a class="header">{{ user.username }}</a>
@@ -19,12 +20,12 @@
                         Lorem Ipsum.
                     </div>
                 </div>
-                <div class="extra content">
-                    <a>
-                        <i class="user icon"></i>
-                        22 Friends
-                    </a>
-                </div>
+{#                <div class="extra content">#}
+{#                    <a>#}
+{#                        <i class="user icon"></i>#}
+{#                        22 Friends#}
+{#                    </a>#}
+{#                </div>#}
             </div>
         </div>
 
@@ -33,11 +34,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
                         aria-controls="pills-profile" aria-selected="true">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-                        aria-controls="pills-profile" aria-selected="false">Profile</a>
                 </li>
 
                 <li class="nav-item">
@@ -57,6 +53,7 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
                     <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Personal Information</h3>
                     <div class="border-top my-3"></div>
 
@@ -129,8 +126,7 @@
                     </form>
                 </div>
 
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    Profile tab</div>
+
                 <div class="tab-pane fade" id="pills-activity" role="tabpanel" aria-labelledby="pills-activity-tab">
                     <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Comments</h3>
                     <div class="border-top my-3"></div>
@@ -158,10 +154,38 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="tab-pane fade" id="pills-notification" role="tabpanel"
-                    aria-labelledby="pills-notification-tab">Notification tab</div>
+
+                <div class="tab-pane fade" id="pills-notification" role="tabpanel" aria-labelledby="pills-notification-tab">
+                    <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Update</h3>
+                    <div class="border-top my-3"></div>
+                </div>
+
                 <div class="tab-pane fade" id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
-                    Setting tab</div>
+                    <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Password</h3>
+                    <div class="border-top my-3"></div>
+                    <button type="submit" class="btn btn-primary mb-2">Reset Password</button>
+
+                    <h3 class="mb-3" style="margin-bottom: 1rem; margin-top: 1rem;">Subscription</h3>
+                    <div class="border-top my-3"></div>
+                    <form>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="subscribe" value="option1" checked>
+                                <label class="form-check-label" for="subscribe">
+                                    Subscribe
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="unsubscribe" value="option2">
+                                <label class="form-check-label" for="unsubscribe">
+                                    Unsubscribe
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Save</button>
+                    </form>
+
+                </div>
             </div>
         </div>
 

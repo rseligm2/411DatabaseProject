@@ -25,23 +25,21 @@ def index():
     return render_template("index.html")
 
 
-# @app.route("/teams/<teams>")
-# def teams_page(teams):
-#     pass
-
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     if current_user.is_authenticated:
+        flash("Welcome to SoccerStat!", 'success')
         return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
         user = load_user(form.username.data)
         if user is None or not user.check_password(form.password.data):
-            flash("Invalid username or password")
+            flash("Invalid username or password", 'danger')
             return redirect(url_for("login"))
         # print(f"Login Attempt: {}")
         login_user(user)
+        flash("Welcome to SoccerStat!", 'success')
         return redirect(url_for("index"))
     return render_template("login.html", form=form)
 
@@ -49,7 +47,8 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    flash("You have successfully logged out.", 'success')
+    return redirect(url_for("index"))
 
 
 @app.route("/signup", endpoint="signup", methods=["GET", "POST"])
@@ -75,9 +74,10 @@ def signup():
 
             # print(load_user(form.username.data))
             # print("Created User")
+            flash('Welcome to the website, you have created a account now.', 'success')
             return redirect(url_for("index"))
         except WriteError:
-            flash("Username already taken")
+            flash("Username already taken", 'danger')
             return redirect(url_for("login"))
 
     return render_template("signup.html", form=form)
@@ -168,7 +168,7 @@ def user_home(username):
         print(user.comments)
         return render_template("profile.html", user=user)
     else:
-        flash("Invalid User")
+        flash("Invalid User", 'danger')
         return render_template("profile.html", user=ex_user)
 
 
@@ -234,7 +234,7 @@ def search():
 @app.route("/submit/comment", methods=["POST"])
 def submit_comment():
     if not current_user.is_authenticated:
-        flash("User is not logged in")
+        flash("User is not logged in", 'danger')
         return redirect(request.referrer)
 
     try:
@@ -266,7 +266,7 @@ def submit_comment():
 
     except WriteError as e:
         # print(e)
-        flash("Failed to post comment")
+        flash("Failed to post comment", 'danger')
 
     # TODO: Create comment
     return redirect(request.referrer)
@@ -283,7 +283,7 @@ def favorite_team():
             {"$addToSet": {"favorite_teams": request.form["team"]}},
         )
     except ...:
-        flash("Failed to favorite team")
+        flash("Failed to favorite team", 'danger')
 
     # TODO: Create comment
     return redirect(request.referrer)
@@ -312,7 +312,7 @@ def remove_comment():
         )
 
     except WriteError:
-        flash("Failed to remove comment")
+        flash("Failed to remove comment", 'danger')
 
     # TODO: Create comment
     return redirect(request.referrer)
