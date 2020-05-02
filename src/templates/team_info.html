@@ -15,7 +15,20 @@
 
             <form action="{{url_for('favorite_team')}}" method="post">
                 <input name="team" type="text" value="{{ team.name }}" readonly hidden>
-                <p>Save to Favorite <button type="submit" class="btn btn-primary">Favorite</button></p>
+                <p>Save to Favorite
+                    <button type="button" class="btn btn-light btn-lg" id="heart-btn" type="submit">
+                    <svg class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+
+                <script>
+                    $("#heart-btn").on("click", function() {
+                        $('.bi-heart-fill').toggleClass("like");
+                    });
+                </script>
+{#                    <button type="submit" class="btn btn-primary">Favorite</button>#}
+                </p>
             </form>
         </div>
         <div class="card-body">

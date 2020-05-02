@@ -13,9 +13,10 @@
         </div>
 
 
-        <div class="input-group input-group-lg">
-            <div class="input-group-prepend">
-                <select class="selectpicker" id="inputGroupSelect04" aria-label="Example select with button addon">
+        <div class="input-group">
+{#            <div class="input-group-prepend">#}
+            <div class="col-3  p-0 m-0">
+                <select class="custom-select rounded-0" id="inputGroupSelect04" aria-label="Example select with button addon">
                     <option selected>Choose...</option>
                     <option value="Country">Country</option>
                     <option value="Team">Team</option>
@@ -23,9 +24,9 @@
                 </select>
             </div>
 
-            <input type="text" class="form-control" aria-label="search">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">Search</button>
+            <input type="text" class="form-control col" aria-label="search">
+            <div class="input-group-append col-3 p-0">
+                <button class="btn btn-outline-secondary" type="button" style="width: 100%">Search</button>
             </div>
         </div>
 
@@ -54,37 +55,13 @@
             </div>
         </form>
 
-
-
-{#        <p>You can search teams in each country or the team information by name.</p>#}
     </div>
-    {% set teams = [
-    {"name": "Manchester United", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png"},
-    {"name": "Manchester City", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Manchester_City_FC_badge.svg/1200px-Manchester_City_FC_badge.svg.png"},
-    {"name": "Real Madrid", "image": "https://cdn.freebiesupply.com/logos/large/2x/real-madrid-c-f-logo-png-transparent.png"},
-    {"name": "Barcelona", "image": "https://brandslogo.net/wp-content/uploads/2018/10/new-fc-barcelona-logo.png"},
-    {"name": "Bayern Munich", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg/1200px-FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg.png"},
-    {"name": "AC Milan", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_of_AC_Milan.svg/1200px-Logo_of_AC_Milan.svg.png"},
-    {"name": "Liverpool", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Liverpool_FC.svg/1200px-Liverpool_FC.svg.png"},
-    {"name": "Paris Saint", "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/1200px-Paris_Saint-Germain_F.C..svg.png"}
-    ] %}
-    <div class="row text-center" style="display: flex; flex-wrap: wrap;">
-        {% for team in teams %}
-        <div class="col-md-3 col-sm-6" style="margin-bottom: 20px">
-            <div class="thumbnail">
-                <img src= "{{ team.image }}" width="100px" height="100px">
 
-                <h5 class="caption">
-                    {{ team.name }}
-                </h5>
-                <p>
-                    <a href="/teams/search/{{ team.name.replace(" ", "_") }}" class="btn btn-info">More Info</a>
-                </p>
+    <div class="mt-5 border" style="height: 500px; width: 100%">
 
-            </div>
-        </div>
-        {% endfor %}
+
     </div>
+
 </div>
 
 

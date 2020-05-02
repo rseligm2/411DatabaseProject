@@ -214,8 +214,12 @@ def team_comments_query(teamname):
     return [Comment(**obj) for obj in res]
 
 
+@app.route("/search")
+def search():
+    return render_template("search.html")
+
 # name should be right and replace space with _
-@app.route("/teams/search/<name>")
+@app.route("/search/<name>")
 def team_info(name):
     team = load_from_database(name, request_type="teams")
 
@@ -225,10 +229,6 @@ def team_info(name):
         team.comments = comments
     return render_template("team_info.html", team_info=team)
 
-
-@app.route("/teams/search")
-def search():
-    return render_template("search.html")
 
 
 @app.route("/submit/comment", methods=["POST"])

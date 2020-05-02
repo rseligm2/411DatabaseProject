@@ -98,3 +98,8 @@ table {
 #search {
     margin: 70px auto;
 }
+
+
+.like path {
+            fill: palevioletred;
+        }
