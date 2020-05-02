@@ -139,3 +139,4 @@ dmypy.json
 .idea/
 .idea/workspace.xml
 app_secrets.py
+src/app_secrets/api_header.py

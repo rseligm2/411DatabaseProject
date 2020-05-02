@@ -5,31 +5,29 @@
 
     <div class="card" id="team_info" style="width: 70%; margin:60px auto">
         <div class="card-header">
-            <h1>{{ team.name }}</h1>
+            <div class="d-flex justify-content-center">
+                <div class="p-2 flex-grow-1 text-center">
+                    <h1>{{ team.name }}</h1>
+                </div>
+                <div >
+                    <form action="{{url_for('favorite_team')}}" method="post">
+                        <input name="team" type="text" value="{{ team.name }}" readonly hidden>
+                            <button type="button" class="btn btn-light" id="heart-btn" type="submit"> Favourite
+                            <svg class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
 
-{#            <input id="chkToggle1" type="checkbox" data-toggle="toggle" checked>#}
+                        <script>
+                            $("#heart-btn").on("click", function() {
+                                $('.bi-heart-fill').toggleClass("like");
+                            });
+                        </script>
 
-            <!-- <p> Save to Favourite
-                <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
-            </p> -->
+                    </form>
+                </div>
+            </div>
 
-            <form action="{{url_for('favorite_team')}}" method="post">
-                <input name="team" type="text" value="{{ team.name }}" readonly hidden>
-                <p>Save to Favorite
-                    <button type="button" class="btn btn-light btn-lg" id="heart-btn" type="submit">
-                    <svg class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" clip-rule="evenodd"/>
-                    </svg>
-                </button>
-
-                <script>
-                    $("#heart-btn").on("click", function() {
-                        $('.bi-heart-fill').toggleClass("like");
-                    });
-                </script>
-{#                    <button type="submit" class="btn btn-primary">Favorite</button>#}
-                </p>
-            </form>
         </div>
         <div class="card-body">
             <div class="row">
@@ -77,11 +75,10 @@
                 {% for comment in team.comments %}
                     <li class="media">
                         {# user photo #}
-                        <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
-                             class="mr-3" alt="..." width ="50" height="50">
+
                         <div class="media-body">
                             <!-- it should be a game, team name for the title, not the username-->
-                            <h3 class="mt-0 mb-1">{{ comment.username }}</h3>
+                            <h3 class="mt-0 mb-1">{{ comment.username}}</h3>
                             <!-- should include time in the comments object-->
                             <!-- <span class="text-muted">{{ comment.time }}</span> -->
                             <p>{{ comment.content }}</p>
@@ -91,7 +88,7 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <div class="border-top my-3"></div>
+
         {#  Add a comment here  #}
 
         <div class="comment">

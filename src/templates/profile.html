@@ -17,7 +17,7 @@
                         <span class="date">{{ user.joined_date }}</span>
                     </div>
                     <div class="description">
-                        Lorem Ipsum.
+                        About me
                     </div>
                 </div>
 {#                <div class="extra content">#}
@@ -82,11 +82,7 @@
                                 <label for="inputEmail4">Email</label>
                                 <input type="email" class="form-control" id="inputEmail4" value="{{ user.email }}">
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputPassword4">Password</label>
-                                <input type="password" class="form-control" id="inputPassword4"
-                                    value="{{ user.password_hash }}">
-                            </div>
+
                         </div>
 
                         <div class="form-group">
@@ -133,11 +129,10 @@
                     <ul class="list-group mb-3">
                         {% for comment in user.comments %}
                         <li class="media">
-                            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
-                                class="mr-3" alt="..." width="50" height="50">
+
                             <div class="media-body">
                                 <!-- it should be a game, team name for the title, not the username-->
-                                <h3 class="mt-0 mb-1">{{ comment.username }}</h3>
+                                <h3 class="mt-0 mb-1">{{ comment.team }}</h3>
                                 <!-- should include time in the comments object-->
                                 <!-- <span class="text-muted">2020-04-04</span> -->
                                 <p>{{ comment.content }}</p>
