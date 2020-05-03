@@ -2,53 +2,32 @@
 
 {% block content %}
     <div class="container">
-        <h1>TEAMS</h1>
+        <div class="jumbotron">
+            <h1 class="display-4 text-center">TEAMS</h1>
+        </div>
+
         <div class="row">
-          <div class="col-3">
-            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                {% for c in res["api"]["countries"] %}
-                    {% if loop.index == 1 %}
-                        <a class="nav-link active" id="v-pills-{{ c["country"] }}-tab" data-toggle="pill"
-                       href="/teams/{{ c["country"] }}" role="tab" aria-controls="v-pills-{{ c["country"] }}"
-                       aria-selected="true">
-                    {% else %}
-                        <a class="nav-link" id="v-pills-{{ c["country"] }}-tab" data-toggle="pill"
-                       href="/teams/{{ c["country"] }}" role="tab" aria-controls="v-pills-{{ c["country"] }}"
-                       aria-selected="true">
-                    {% endif %}
-                        <img class="ui avatar image" src="{{ c["flag"] }}">
-                        <span>{{ c["country"] }}</span>
-                        </a>
-                {% endfor %}
-            </div>
-          </div>
-          <div class="col-9">
-            <div class="tab-content" id="v-pills-tabContent">
-              {% for c in res["api"]["countries"] %}
-                  {% if loop.index == 1 %}
-                    <div class="tab-pane fade show active" id="v-pills-{{ c["country"] }}" role="tabpanel"
-                       aria-labelledby="v-pills-{{ c["country"] }}-tab">
-                  {% else %}
-                    <div class="tab-pane fade" id="v-pills-{{ c["country"] }}" role="tabpanel"
-                       aria-labelledby="v-pills-{{ c["country"] }}-tab">
-                  {% endif %}
-                    <p>test test</p>
+            {% for team in teams %}
+            <div class="col-md-3 col-sm-4" style="margin-bottom: 20px">
+                <div class="card bg-light p-2  text-center">
+                    <img src= "{{ team[2] }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ team[1] }}
+                        </h5>
+                        <a href="/search/{{ team[1].replace(" ", "_") }}"class="btn btn-info btn-sm">More Info</a>
+{#                        <a href="/search/{{ team.name.replace(" ", "_") }}" class="btn btn-info btn-sm">More Info</a>#}
+                    </div>
 
-                    {% block teams %} {% endblock %}
-                  </div>
-              {% endfor %}
-
+                </div>
             </div>
-          </div>
+            {% endfor %}
+
         </div>
     </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $('#v-pills-tab a').on('click', function(){ $(this).tab('show')}); // Select first tab
-    </script>
+{#    <script type="text/javascript">#}
+{#        $('#v-pills-tab a').on('click', function(){ $(this).tab('show')}); // Select first tab#}
+{#    </script>#}
 
 {% endblock %}

@@ -9,7 +9,7 @@
                 <div class="p-2 flex-grow-1 text-center">
                     <h1>{{ team.name }}</h1>
                 </div>
-                <div >
+                <div>
                     <form action="{{url_for('favorite_team')}}" method="post">
                         <input name="team" type="text" value="{{ team.name }}" readonly hidden>
                             <button type="button" class="btn btn-light" id="heart-btn" type="submit"> Favourite

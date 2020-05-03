@@ -34,17 +34,30 @@ def load_from_database(request, request_type):
         # like this or else you will lose your job.
         connection = get_connection()
         cursor = connection.cursor()
+
         team_prefix = request
 
-        iterable = cursor.execute(
-            f"SELECT * FROM Teams WHERE name LIKE '{request}%'"
-        )
-        connection.commit()
+        if request == 'teams':
+            iterable = cursor.execute(
+                f"SELECT * FROM Teams"
+            )
+            connection.commit()
 
-        rel = iterable.fetchone()
-        # print(rel)
+            rel = iterable.fetchall()
+
+            return rel
+        else:
+            iterable = cursor.execute(
+                f"SELECT * FROM Teams WHERE name LIKE '{request}%'"
+            )
+            connection.commit()
+
+            rel = iterable.fetchone()
+
+
+        #print(rel)
         team = Team(*rel)
-        # print(team)
+        #print(team)
 
         # if not found return requests get ["api"]["teams"][0]
         return team

@@ -90,8 +90,11 @@ def contact():
 
 @app.route("/teams", methods=["GET"])
 def teams():
-    response = load_from_database("countries")
-    return render_template("teams.html", res=response)
+    allteams = load_from_database("teams", request_type="teams")
+    return render_template("teams.html", teams=allteams)
+# def teams():
+#     response = load_from_database("teams", request_type=None)
+#     return render_template("teams.html", res=response)
 
 
 # TODO: NOW YOU CANNOT CLICK THE LEFTSIDE BAR AND GET TO THAT COUNTRY_TEAM PAGE. HAVE TO OPEN IT IN A NEW TAB
@@ -310,8 +313,10 @@ def remove_comment():
             {"_id": request.form["username"]},
             {"$pullAll": {"comments": _id}},
         )
+        flash("Remove comment successfully", 'success')
 
     except WriteError:
+        # I can see the comment is removed but still shows this failure message
         flash("Failed to remove comment", 'danger')
 
     # TODO: Create comment
