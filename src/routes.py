@@ -90,32 +90,28 @@ def contact():
 
 @app.route("/teams", methods=["GET"])
 def teams():
-    allteams = load_from_database("teams", request_type="teams")
-    return render_template("teams.html", teams=allteams)
+    allteams = load_from_database("", request_type="teams_country")
+    allcountries = load_from_database("teams", request_type="countries")
+    return render_template("team_country.html", teams=allteams, countries=allcountries)
 # def teams():
 #     response = load_from_database("teams", request_type=None)
 #     return render_template("teams.html", res=response)
 
-
-# TODO: NOW YOU CANNOT CLICK THE LEFTSIDE BAR AND GET TO THAT COUNTRY_TEAM PAGE. HAVE TO OPEN IT IN A NEW TAB
 @app.route("/teams/<country>", methods=["GET"])
 def search_team_country(country):
-
-    return render_template(
-        "team_country.html",
-        res=load_from_database("countries"),
-        team_country=load_from_database(country),
-    )
+    result = load_from_database(country, request_type="teams_country")
+    allcountries = load_from_database("teams", request_type="countries")
+    return render_template("team_country.html", countries=allcountries, teams=result)
 
 
 ex_user = {
     "username": "vivian",
-    "email": "yuxuanz8@illinois.edu",
+    "email": "sdkslal@illinois.edu",
     "password_hash": "123456",
     "favorite_player": "Messi",
     "team_flair": "Manchester City",
-    "birthday": "1995/10/05",
-    "joined_date": "2020/4/1",
+    "birthday": "1995-10-05",
+    "joined_date": "2020-4-1",
     "firstname": "Yuxuan",
     "lastname": "Zhang",
     "country": "United State",

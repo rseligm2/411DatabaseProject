@@ -1,28 +1,26 @@
 {% extends "teams.html" %}
 
 {% block teams %}
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">Founded</th>
-          <th scope="col">venue_name</th>
-          <th scope="col">venue_city</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for t in team_country["api"]["teams"] %}
-        <tr>
-          <th scope="row">{{ loop.index }}</th>
-          <td>{{ t["name"] }}</td>
-          <td>{{ t["founded"] }}</td>
-          <td>{{ t["venue_name"] }}</td>
-          <td>{{ t["venue_city"] }}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+
+    <div class="container">
+        <div class="row">
+        {% for team in teams %}
+            <div class="col-3" style="margin-bottom: 20px">
+                <div class="card bg-light p-2  text-center">
+                    <img src= "{{ team[2] }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ team[1] }}
+                        </h5>
+                        <a href="/search/{{ team[1].replace(" ", "_") }}"class="btn btn-info btn-sm">More Info</a>
+{#                        <a href="/search/{{ team.name.replace(" ", "_") }}" class="btn btn-info btn-sm">More Info</a>#}
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
 
 
 {% endblock %}

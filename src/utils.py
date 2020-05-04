@@ -22,11 +22,26 @@ def api_request(request):
 
 # TODO: Fix the interface of this function so that it is not absolutely awful
 def load_from_database(request, request_type):
-    request_type = None
-    if request == "countries":
-        request_type = "countries"
-        # return api_request(request)
-        return None
+    #request_type = None
+    if request_type == "countries":
+        connection = get_connection()
+        cursor = connection.cursor()
+        iterable = cursor.execute(
+            f"SELECT DISTINCT country FROM Teams"
+        )
+        connection.commit()
+        rel = iterable.fetchall()
+        return rel
+    elif request_type == "teams_country":
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        iterable = cursor.execute(
+            f"SELECT * FROM Teams WHERE country LIKE '{request}%'"
+        )
+        connection.commit()
+        rel = iterable.fetchall()
+        return rel
     else:
         # Currently other refers to teams
         # Note that we don't sanitize inputs because that is the requirement of the project
@@ -35,9 +50,8 @@ def load_from_database(request, request_type):
         connection = get_connection()
         cursor = connection.cursor()
 
-        team_prefix = request
+        if request == "teams":
 
-        if request == 'teams':
             iterable = cursor.execute(
                 f"SELECT * FROM Teams"
             )
@@ -53,11 +67,9 @@ def load_from_database(request, request_type):
             connection.commit()
 
             rel = iterable.fetchone()
+            #print(rel)
+    team = Team(*rel)
+            #print(team)
 
-
-        #print(rel)
-        team = Team(*rel)
-        #print(team)
-
-        # if not found return requests get ["api"]["teams"][0]
-        return team
+            # if not found return requests get ["api"]["teams"][0]
+    return team

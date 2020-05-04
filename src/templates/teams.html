@@ -1,33 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
+
     <div class="container">
         <div class="jumbotron">
             <h1 class="display-4 text-center">TEAMS</h1>
         </div>
 
         <div class="row">
-            {% for team in teams %}
-            <div class="col-md-3 col-sm-4" style="margin-bottom: 20px">
-                <div class="card bg-light p-2  text-center">
-                    <img src= "{{ team[2] }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            {{ team[1] }}
-                        </h5>
-                        <a href="/search/{{ team[1].replace(" ", "_") }}"class="btn btn-info btn-sm">More Info</a>
-{#                        <a href="/search/{{ team.name.replace(" ", "_") }}" class="btn btn-info btn-sm">More Info</a>#}
+            <div class="col-3">
+                <ul class="nav flex-column">
+                    <div class="card-header">
+                        Country
                     </div>
-
-                </div>
+                    <li class="nav-item">
+{#                        <a class="nav-link" id="v-pills-all-tab" data-toggle="pill"#}
+{#                               href=/teams" role="tab" aria-controls="v-pills-all"#}
+{#                               aria-selected="true">{{ c[0 }}</a>#}
+                        <a class="nav-link active" href="/teams">All</a>
+                    </li>
+                    {% for c in countries %}
+                        <li class="nav-item">
+{#                            <a class="nav-link" id="v-pills-{{ c[0] }}-tab" data-toggle="pill"#}
+{#                               href=/teams/{{ c[0] }}" role="tab" aria-controls="v-pills-profile"#}
+{#                               aria-selected="false">{{ c[0 }}</a>#}
+                            <a class="nav-link" href="/teams/{{ c[0] }}"> {{ c[0] }} </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-            {% endfor %}
-
+            <div class="col-9">
+{#                <div class="tab-content" id="v-pills-tabContent">#}
+                    {% block teams %} {% endblock %}
+{#                </div>#}
+            </div>
         </div>
     </div>
-
+{##}
 {#    <script type="text/javascript">#}
-{#        $('#v-pills-tab a').on('click', function(){ $(this).tab('show')}); // Select first tab#}
+{#    $('#teamtab a').on('click', function (e) {#}
+{#      e.preventDefault()#}
+{#      $(this).tab('show')#}
+{#    })#}
 {#    </script>#}
-
 {% endblock %}
