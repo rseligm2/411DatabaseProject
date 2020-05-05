@@ -215,7 +215,7 @@ def team_comments_query(teamname):
 
 @app.route("/search")
 def search():
-    return render_template("search.html")
+    return render_template("search.html", results=None)
 
 # name should be right and replace space with _
 @app.route("/search/<name>")

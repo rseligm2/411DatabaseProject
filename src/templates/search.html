@@ -3,12 +3,12 @@
 <div class="container" id="search" style="width: 80%">
     <div class="jumbotron pb-2">
         <div class="text-center mb-3">
-            <h1 class="display-4">
+            <h1>
                 <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
                     <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
                 </svg>
-                Search
+                Advanced Search
             </h1>
         </div>
 
@@ -18,7 +18,6 @@
             <div class="col-3  p-0 m-0">
                 <select class="custom-select rounded-0" id="inputGroupSelect04" aria-label="Example select with button addon">
                     <option selected>Choose...</option>
-                    <option value="Country">Country</option>
                     <option value="Team">Team</option>
                     <option value="Player">Player</option>
                 </select>
@@ -34,14 +33,14 @@
             <div class="d-flex flex-column flex-md-row justify-content-around">
                 <div class="form-group">
                     <select class="form-control">
-                        <option>Country</option>
+                        <option>Sort by</option>
                     </select>
                 </div>
-{#                <div class="form-group">#}
-{#                    <select class="form-control">#}
-{#                        <option>League</option>#}
-{#                    </select>#}
-{#                </div>#}
+                <div class="form-group">
+                    <select class="form-control">
+                        <option>League</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <select class="form-control">
                         <option>Team</option>
@@ -58,7 +57,34 @@
     </div>
 
     <div class="mt-5 border" style="height: 500px; width: 100%">
+        <table class="table table-striped">
 
+          <thead>
+          {#    HEADER      #}
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Col1</th>
+              <th scope="col">Col2</th>
+              <th scope="col">Col3</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% set idx = 0 %}
+          {% if results %}
+              {% for record in results %}
+                {% if record %}
+                    <tr>
+                        <th scope="row">{{ idx }}</th>
+                        {% for element in record %}
+                            <td> {{ element }}</td>
+                        {% endfor %}
+                        {% set idx = idx + 1 %}
+                    </tr>
+                {% endif %}
+              {% endfor %}
+          {% endif %}
+          </tbody>
+        </table>
 
     </div>
 
