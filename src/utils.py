@@ -73,3 +73,28 @@ def load_from_database(request, request_type):
 
             # if not found return requests get ["api"]["teams"][0]
     return team
+
+
+def player_stats_join(player, season, team):
+    """Input player_id, season, team_id
+
+        returns rows of Player and PlayerStats tables joined
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    format_str = """SELECT * 
+    FROM Players
+    NATURAL JOIN PlayerStats
+    WHERE PlayerStats.player_id = "{player}" AND PlayerStats.season = "{season}"
+        AND PlayerStats.team_id = "{team}"
+    
+    """
+    query = format_str.format(
+        player=player,
+        season=season,
+        team=team
+    )
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    return rows
+
