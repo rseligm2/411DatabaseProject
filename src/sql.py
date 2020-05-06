@@ -147,4 +147,91 @@ def init_database():
     connection.commit()
 
 
+def get_player_names():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT DISTINCT player_name FROM Players")
+    connection.commit()
+    return [i[0] for i in cursor.fetchall()]
+
+
+def get_team_names():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT DISTINCT name FROM Teams")
+    connection.commit()
+    return [i[0] for i in cursor.fetchall()]
+
+
+def get_league_names():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT DISTINCT league FROM PlayerStats ORDER BY league")
+    connection.commit()
+    return [i[0] for i in cursor.fetchall()]
+
+
+def advanced_search_teams(search_string, sort_by, league, team):
+    base_query = f'''SELECT
+                    DISTINCT Teams.name, PlayerStats.league, Teams.team_id
+                FROM
+                    Teams JOIN PlayerStats on Teams.team_id = PlayerStats.team_id
+                WHERE
+                    Teams.name LIKE "{search_string}%"
+                '''
+
+    if league != "":
+        base_query += f'\tAND PlayerStats.league = "{league}"\n'
+
+    if team != "":
+        base_query += f'\tAND Teams.name = "{team}"\n'
+
+    if sort_by.lower() == "country":
+        base_query += f"ORDER BY Teams.{sort_by.lower()}"
+
+    if sort_by.lower() == "league":
+        base_query += f"ORDER BY PlayerStats.{sort_by.lower()}"
+
+    print(base_query)
+
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        base_query
+    )
+    connection.commit()
+    return cursor.fetchall()
+
+
+def advanced_search_players(search_string, sort_by, league, team):
+    base_query = f'''SELECT
+                    DISTINCT Players.player_name, PlayerStats.league, Players.player_id
+                FROM
+                    Players JOIN PlayerStats on Players.player_id = PlayerStats.player_id
+                WHERE
+                    Players.player_name LIKE "{search_string}%"
+                '''
+
+    if league != "":
+        base_query += f'\tAND PlayerStats.league = "{league}"\n'
+
+    if team != "":
+        base_query += f'\tAND PlayerStats.team_name = "{team}"\n'
+
+    if sort_by.lower() == "country":
+        base_query += f"ORDER BY Players.nationality"
+
+    if sort_by.lower() == "league":
+        base_query += f"ORDER BY PlayerStats.{sort_by.lower()}"
+
+    print(base_query)
+
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        base_query
+    )
+    connection.commit()
+    return cursor.fetchall()
+
 init_database()

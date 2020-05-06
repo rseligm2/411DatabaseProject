@@ -9,9 +9,11 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash
 
 from src.app import app, login_manager
-from src.form import LoginForm, SignupForm
+from src.form import LoginForm, SignupForm, SearchForm
 from src.resources.user import User, load_user, Comment
 from src.mongo import users_col, comments_col, team_comments_col
+
+from src.sql import advanced_search_teams, advanced_search_players
 
 from src.utils import load_from_database, player_stats_join, load_player_info, load_all_players
 
@@ -79,7 +81,7 @@ def signup():
         except WriteError:
             flash("Username already taken", 'danger')
             return redirect(url_for("login"))
-
+    
     return render_template("signup.html", form=form)
 
 
@@ -225,9 +227,44 @@ def team_comments_query(teamname):
     return [Comment(**obj) for obj in res]
 
 
-@app.route("/search")
+@app.route("/search", methods=["GET", "POST"])
 def search():
-    return render_template("search.html", results=None)
+    form = SearchForm(request.form)
+
+    if request.method == "POST" and form.validate_on_submit():
+        search_type = dict(form.search_type.choices).get(form.search_type.data)
+        search_string = form.search_text.data
+        sort_by = form.sort_type.data
+        league = form.league.data
+        team = form.team.data
+
+        # print(search_type)
+        # print(search_string)
+        # print(sort_by)
+        # print(league)
+        # print(team)
+        
+        columns = None
+
+        if search_type == "Team":
+            columns = ["Team Name", "Player Leagues", "Link"]
+            results = advanced_search_teams(search_string, sort_by, league, team)
+
+            results = [
+                (i[0], i[1], f'<a href="/teams/{i[2]}" class="card-link">Info</a>') for i in results
+            ]
+            
+        if search_type == "Player":
+            columns = ["Player Name", "League", "Link"]
+            results = advanced_search_players(search_string, sort_by, league, team)
+
+            results = [
+                (i[0], i[1], f'<a href="/players/{i[2]}" class="card-link">Info</a>') for i in results
+            ]
+        # print(results)
+        return render_template("search.html", results=results, form=form, columns=columns)
+
+    return render_template("search.html", results=None, form=form)
 
 # name should be right and replace space with _
 @app.route("/search/<name>")
