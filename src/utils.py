@@ -5,8 +5,8 @@ import requests
 from src.sql import get_connection
 from src.app_secrets import api_header
 from src.resources.team import Team
-
-
+from src.resources.player import PlayerBaseComponent
+from src.resources.player import PlayerStats
 def api_request(request):
 
     if request == 'countries':
@@ -75,26 +75,45 @@ def load_from_database(request, request_type):
     return team
 
 
-def player_stats_join(player, season, team):
-    """Input player_id, season, team_id
+def load_all_players():
+    conn = get_connection()
+    cursor = conn.cursor()
+    iterable = cursor.execute(
+        f"SELECT * FROM Players NATURAL JOIN PlayerStats GROUP BY Players.player_id ORDER BY SUM(PlayerStats.games_minutes_played) DESC LIMIT 30"
+    )
+    columns = cursor.description
+    result = [{columns[index][0]: column for index, column in enumerate(value)} for value in iterable.fetchall()]
+
+    return result
+
+
+
+def load_player_info(player):
+    conn = get_connection()
+    cursor = conn.cursor()
+    iterable = cursor.execute(
+        f"SELECT * FROM Players WHERE player_id='{player}'"
+    )
+    rel = iterable.fetchone()
+    player_profile = PlayerBaseComponent(*rel)
+    return player_profile
+
+
+def player_stats_join(player):
+    """Input player_id
 
         returns rows of Player and PlayerStats tables joined
     """
     conn = get_connection()
     cursor = conn.cursor()
-    format_str = """SELECT * 
-    FROM Players
-    NATURAL JOIN PlayerStats
-    WHERE PlayerStats.player_id = "{player}" AND PlayerStats.season = "{season}"
-        AND PlayerStats.team_id = "{team}"
-    
-    """
-    query = format_str.format(
-        player=player,
-        season=season,
-        team=team
+
+    iterable = cursor.execute(
+        f"SELECT * FROM Players NATURAL JOIN PlayerStats WHERE PlayerStats.player_id='{player}'"
     )
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    return rows
+    columns = cursor.description
+    result = [{columns[index][0]: column for index, column in enumerate(value)} for value in iterable.fetchall()]
+
+    # rel = iterable.fetchall()
+
+    return result
 

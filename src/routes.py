@@ -13,7 +13,7 @@ from src.form import LoginForm, SignupForm
 from src.resources.user import User, load_user, Comment
 from src.mongo import users_col, comments_col, team_comments_col
 
-from src.utils import load_from_database
+from src.utils import load_from_database, player_stats_join, load_player_info, load_all_players
 
 import requests
 
@@ -86,6 +86,18 @@ def signup():
 @app.route("/contact", endpoint="contact")
 def contact():
     return render_template("contact.html")
+
+
+@app.route('/players', methods=["GET"], endpoint='players')
+def all_player():
+    players = load_all_players()
+    return render_template('players.html', players=players)
+
+@app.route('/players/<playerid>', methods=["GET"])
+def player_info(playerid):
+    player = load_player_info(playerid)
+    stats = player_stats_join(playerid)
+    return render_template('player_info.html', player=player, stats=stats)
 
 
 @app.route("/teams", methods=["GET"])
@@ -317,3 +329,4 @@ def remove_comment():
 
     # TODO: Create comment
     return redirect(request.referrer)
+

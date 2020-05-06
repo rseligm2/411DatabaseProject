@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+
+    <div class="col-6" style="margin-top: 20px">
+        <h1 class="display-3"> {{ player.player_name }} </h1>
+        <h3>Position</h3>
+
+        <table class="table bg-light">
+
+            <tr>
+                <th>First Name:</th>
+                <td>{{ player.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Last Name:</th>
+                <td>{{ player.lastname}}</td>
+            </tr>
+            <tr>
+                <th>Age:</th>
+                <td>{{ player.age }}</td>
+            </tr>
+            <tr>
+                <th>Birthday:</th>
+                <td>{{ player.birth_date }}</td>
+            </tr>
+            <tr>
+                <th>Birth Country:</th>
+                <td>{{ player.birth_country }}</td>
+            </tr>
+            <tr>
+                <th>Nationality:</th>
+                <td>{{ player.nationality }}</td>
+            </tr>
+            <tr>
+                <th>Height:</th>
+                <td>{{ player.height }}</td>
+            </tr>
+            <tr>
+                <th>Weight:</th>
+                <td>{{ player.weight }}</td>
+            </tr>
+
+        </table>
+
+    </div>
+    <div class="col-12 mt-3">
+        <h2 class="text-info"> Seasonal Stats</h2>
+        <table class="table">
+            <thead class="table-info">
+                <tr>
+                    <th scope="col">Season</th>
+                    <th scope="col">League</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Games played</th>
+                    <th scope="col">Games minutes played</th>
+                    <th scope="col">Total Shots</th>
+                    <th scope="col">Total Goals</th>
+                    <th scope="col">Goal Assists</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in stats %}
+                    <tr>
+                        <td>{{ record['season'] }}</td>
+                        <td>{{ record['league'] }}</td>
+                        <td>{{ record['team_name'] }}</td>
+                        <td>{{ record['games_appearances'] }}</td>
+                        <td>{{ record['games_minutes_played'] }}</td>
+                        <td>{{ record['shots_total'] }}</td>
+                        <td>{{ record['goals_total'] }}</td>
+                        <td>{{ record['goals_assists'] }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+{% endblock %}

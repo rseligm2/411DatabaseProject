@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4 text-center">Players</h1>
+    </div>
+    <div class="container" style="width: 80%">
+        <h2 class="text-center">Most Played Players</h2>
+        <table class="table table-striped" >
+            <thead class="bg-warning">
+                <tr>
+                    <th scope="col">Ranking</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Nationality</th>
+                    <th scope="col">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ player['player_name'] }}</td>
+                        <td>{{ player['nationality'] }} </td>
+                        <td><a href="/players/{{ player['player_id'] }}" class="card-link">Info</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{#    <style type="text/css">#}
+{#        table { page-break-inside:auto }#}
+{#        tr    { page-break-inside:avoid; page-break-after:auto }#}
+{#    </style>#}
+
+{% endblock %}
