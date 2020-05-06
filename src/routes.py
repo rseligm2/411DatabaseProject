@@ -168,7 +168,6 @@ def user_comments_query(username):
     return [Comment(**obj) for obj in res]
 
 
-# TODO: ADD BACKEND FUNCTION TO FIND USER FROM THE DATABASE. NOW I JUST ADD ONE DICTIONARY TO THE WEBSITE
 # TODO: ADD SAVE TO CHANGE THE PROFILE DATA.
 @app.route("/<username>/home", endpoint="profile")
 def user_home(username):
@@ -185,10 +184,6 @@ def user_home(username):
         return render_template("profile.html", user=ex_user)
 
 
-# TODO: ACTIVITY TAB: LIST COMMENT, DELETE FUNC
-
-# TODO: ADD SETTING TAB: SUSCRIBE / UNSUSCRIBE
-
 # ============= API ===============
 # Allows you to search for a team in relation to a team {name} or {country}
 # Spaces must be replaced by underscore for better search performance.
@@ -197,7 +192,6 @@ def user_home(username):
 # for now api_request can search for country and team_name.
 # !!! may need to change it later for other searches
 # =================================
-
 
 def team_comments_query(teamname):
     res = list(
@@ -251,7 +245,7 @@ def search():
             results = advanced_search_teams(search_string, sort_by, league, team)
 
             results = [
-                (i[0], i[1], f'<a href="/teams/{i[2]}" class="card-link">Info</a>') for i in results
+                (i[0], i[1], f'<a href="/search/{i[0].replace(" ","_")}" class="card-link">Info</a>') for i in results
             ]
             
         if search_type == "Player":
@@ -358,12 +352,11 @@ def remove_comment():
             {"_id": request.form["username"]},
             {"$pullAll": {"comments": _id}},
         )
-        flash("Remove comment successfully", 'success')
-
-    except WriteError:
+        #flash("Remove comment successfully", 'success')
+    except WriteError as e:
         # I can see the comment is removed but still shows this failure message
-        flash("Failed to remove comment", 'danger')
-
-    # TODO: Create comment
+        # flash("Failed to remove comment", 'danger')
+        print(e)
+        flash("")
     return redirect(request.referrer)
 

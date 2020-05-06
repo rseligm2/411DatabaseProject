@@ -63,36 +63,29 @@
         <table class="table table-striped">
 
             <thead>
-                {#    HEADER      #}
                 <tr>
-
                     {% if columns %}
-                    <th scope="col">#</th>
-                    {% for col in columns %}
-                    <th scope="col">{{ col }}</th>
-                    {% endfor %}
-                    {% else %}
-                    <th scope="col">#</th>
-                    <th scope="col">Col1</th>
-                    <th scope="col">Col2</th>
-                    <th scope="col">Col3</th>
+                        <th scope="col">#</th>
+                        {% for col in columns %}
+                            <th scope="col">{{ col }}</th>
+                        {% endfor %}
                     {% endif %}
                 </tr>
             </thead>
             <tbody>
                 {% set idx = 0 %}
                 {% if results %}
-                {% for record in results %}
-                {% if record %}
-                <tr>
-                    <th scope="row">{{ loop.index }}</th>
-                    {% for element in record %}
-                    <td> {{ element | safe }}</td>
+                    {% for record in results %}
+                        {% if record %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            {% for element in record %}
+                                <td> {{ element | safe }}</td>
+                            {% endfor %}
+                            {% set idx = idx + 1 %}
+                        </tr>
+                        {% endif %}
                     {% endfor %}
-                    {% set idx = idx + 1 %}
-                </tr>
-                {% endif %}
-                {% endfor %}
                 {% endif %}
             </tbody>
         </table>
