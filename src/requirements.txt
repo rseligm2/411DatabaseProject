@@ -22,7 +22,7 @@ Click==7.0
 conda==4.8.1
 conda-package-handling==1.6.0
 coverage==4.5.4
-cryptography==2.8
+cryptography==3.2
 cycler==0.10.0
 Cython==0.29.15
 decorator==4.4.1
