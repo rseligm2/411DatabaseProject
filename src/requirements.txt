@@ -76,7 +76,7 @@ kombu==4.6.3
 lazy-object-proxy==1.4.3
 line-profiler==3.0.2
 loguru==0.4.0
-lxml==4.4.2
+lxml==4.6.3
 Markdown==3.2
 MarkupSafe==1.1.1
 matplotlib==3.1.2
