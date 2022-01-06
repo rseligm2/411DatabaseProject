@@ -14,7 +14,7 @@ black==19.10b0
 bleach==3.1.0
 CacheControl==0.12.6
 cachetools==4.0.0
-celery==4.4.0rc1
+celery==5.2.2
 certifi==2019.11.28
 cffi==1.13.2
 chardet==3.0.4
