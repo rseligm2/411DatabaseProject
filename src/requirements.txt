@@ -28,7 +28,7 @@ Cython==0.29.15
 decorator==4.4.1
 defusedxml==0.6.0
 docutils==0.15.2
-dparse==0.4.1
+dparse==0.5.2
 entrypoints==0.3
 firebase-admin==3.2.1
 flake8==3.7.9
